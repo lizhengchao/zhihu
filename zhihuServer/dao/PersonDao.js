@@ -28,9 +28,9 @@ class PersonDao extends baseDao {
         let person = this.person;
 
         person.findById(id).then((p) => {
-            sCallback(p);
+            sCallback && sCallback(p);
         }).catch((err) => {
-            fCallback(err);
+            fCallback && fCallback(err);
         })
     }
 
@@ -44,6 +44,34 @@ class PersonDao extends baseDao {
             sCallback && sCallback(p);
         }).catch((err) => {
             console.info('create fail, err:' + err);
+            fCallback && fCallback(err);
+        })
+    }
+    
+    updatePerson (id, name, sCallback, fCallback) {
+        let person = this.person;
+
+        person.findById(id).then(person => {
+            person.name= name;
+            person.save().then(person => {
+                sCallback && sCallback(person);
+            }).catch(err => {
+                fCallback && fCallback(err);
+            })
+        }).catch(err => {
+            fCallback && fCallback(err);
+        })
+    }
+    
+    deletePerson (id, sCallback, fCallback) {
+        let person = this.person;
+        person.findById(id).then(person => {
+            person.destroy().then(() => {
+                sCallback && sCallback();
+            }).catch(err => {
+                fCallback && fCallback(err);
+            })
+        }).catch(err => {
             fCallback && fCallback(err);
         })
     }

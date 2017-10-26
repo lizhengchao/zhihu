@@ -14,6 +14,14 @@ class PersonService {
     addPerson (name, sCallback, fCallback) {
         return this.personDao.addPerson(name, sCallback, fCallback);
     }
+
+    updatePerson (id, name, sCallback, fCallback) {
+        return this.personDao.updatePerson(id, name, sCallback, fCallback);
+    }
+    
+    deletePerson (id, sCallback, fCallback) {
+        return this.personDao.deletePerson(id, sCallback, fCallback);
+    }
 }
 
 module.exports = PersonService;

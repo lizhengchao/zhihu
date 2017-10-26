@@ -34,7 +34,29 @@ router.get('/addUser', (req, res)=> {
             res.status(500).send('add user fail, error: ' + error);
         }
     personService.addPerson(req.query.name, successCallback, failCallback);
-})
+});
+
+router.get('/updateUser', (req, res) => {
+    let
+        successCallback = (person) => {
+            res.send('update user success, user: ' + JSON.stringify(person));
+        },
+        failCallback = (error) => {
+            res.status(500).send('update user fail, error: ' + error);
+        }
+    personService.updatePerson(req.query.id, req.query.name, successCallback, failCallback);
+});
+
+router.get('/deleteUser', (req, res) => {
+    let
+        successCallback = () => {
+            res.send('delete user success');
+        },
+        failCallback = (error) => {
+            res.status(500).send('update user fail, error: ' + error);
+        }
+    personService.deletePerson(req.query.id, successCallback, failCallback);
+});
 
 module.exports = router;
 
