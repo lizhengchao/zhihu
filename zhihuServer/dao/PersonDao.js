@@ -15,7 +15,8 @@ class PersonDao extends baseDao {
                 },
                 name: Sequelize.STRING,
                 'create_time': Sequelize.DATE,
-                'modify_time': Sequelize.DATE
+                'modify_time': Sequelize.DATE,
+                'is_delete': Sequelize.STRING(1)
             }, {
                 timestamps: false,
                 freezeTableName: true,
@@ -28,6 +29,10 @@ class PersonDao extends baseDao {
         let person = this.person;
 
         person.findById(id).then((p) => {
+            if(p['is_delete'] === '1') {
+                fCallback && fCallback('this user has been delete');
+                return;
+            }
             sCallback && sCallback(p);
         }).catch((err) => {
             fCallback && fCallback(err);
@@ -38,7 +43,9 @@ class PersonDao extends baseDao {
         let person = this.person;
 
         person.create({
-            name: name
+            name: name,
+            'create_time': new Date(),
+            'modify_time': new Date()
         }).then((p) => {
             console.info('created: ' + JSON.stringify(p));
             sCallback && sCallback(p);
@@ -52,7 +59,11 @@ class PersonDao extends baseDao {
         let person = this.person;
 
         person.findById(id).then(person => {
+            if(person['is_delete'] === '1') {
+                fCallback && fCallback('this user has been delete');
+            }
             person.name= name;
+            person['modify_time'] = new Date();
             person.save().then(person => {
                 sCallback && sCallback(person);
             }).catch(err => {
@@ -65,15 +76,29 @@ class PersonDao extends baseDao {
     
     deletePerson (id, sCallback, fCallback) {
         let person = this.person;
+
         person.findById(id).then(person => {
-            person.destroy().then(() => {
-                sCallback && sCallback();
+            person['is_delete']= 1;
+            person['modify_time'] = new Date();
+            person.save().then(person => {
+                sCallback && sCallback(person);
             }).catch(err => {
                 fCallback && fCallback(err);
             })
         }).catch(err => {
             fCallback && fCallback(err);
         })
+
+        //真删除，改为假删除
+        // person.findById(id).then(person => {
+        //     person.destroy().then(() => {
+        //         sCallback && sCallback();
+        //     }).catch(err => {
+        //         fCallback && fCallback(err);
+        //     })
+        // }).catch(err => {
+        //     fCallback && fCallback(err);
+        // })
     }
 }
 
