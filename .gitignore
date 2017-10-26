@@ -1,0 +1,6 @@
+node_modules
+build
+*.zip
+tests_output
+TODOs.md
+.idea
