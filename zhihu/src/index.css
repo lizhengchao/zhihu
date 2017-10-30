@@ -2,4 +2,20 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  font-size: 15px;
+  background: #f7fafc;
+  color: #555;
+}
+
+.hide-text {
+  font-size: 0px;
+}
+
+a {
+  text-decoration: none;
+  color: #5ca5e8;
+}
+
+.clear {
+  clear: both;
 }
