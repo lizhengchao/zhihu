@@ -11,7 +11,8 @@ class PersonDao extends baseDao {
             Person = sequelize.define('Person', {
                 id: {
                     type: Sequelize.INTEGER,
-                    primaryKey: true
+                    primaryKey: true,
+                    autoIncrement: true
                 },
                 name: Sequelize.STRING,
                 'create_time': Sequelize.DATE,
