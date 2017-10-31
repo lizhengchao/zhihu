@@ -3,7 +3,7 @@
  */
 class VerificationCodeService {
     constructor () {
-        let VerificationCodeDao = require('../dao/VerificationCodeDao');
+        let VerificationCodeDao = require(getPath('dao/VerificationCodeDao'));
         this.verificationCodeDao = new VerificationCodeDao();
     }
 
@@ -17,6 +17,16 @@ class VerificationCodeService {
 
     deleteVerificationCode (id, sCallback, fCallback) {
         return this.verificationCodeDao.deleteVerificationCode(id, sCallback, fCallback);
+    }
+    
+    verificationCode (id, numeric, sCallback, fCallback) {
+        this.verificationCodeDao.getVerificationCodeById(id, (verificationCode) => {
+            if(verificationCode.numeric === parseInt(numeric)) {
+                sCallback();
+            } else {
+                fCallback('验证码错误');
+            }
+        }, fCallback);
     }
 }
 

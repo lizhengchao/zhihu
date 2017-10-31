@@ -4,12 +4,12 @@
 const express = require('express'),
     router = express.Router(),
     captchapng = require('captchapng'),
-    {ResponseData, ErrorCode} = require('./responseData');
+    {ResponseData, ErrorCode} = require(getPath('extra/ResponseData'));
 let verificationCodeService;
 
 
 router.use('/', (req, res, next)=>{
-    const VerificationCodeService = require('../service/VerificationCodeService');
+    const VerificationCodeService = require(getPath('service/VerificationCodeService'));
     verificationCodeService = new VerificationCodeService();
     next();
 })

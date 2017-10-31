@@ -4,7 +4,7 @@
 
 class baseDao {
     constructor () {
-        const sequelize = require('../getSequelize.js');
+        const sequelize = require(getPath('getSequelize.js'));
         this.sequelize = sequelize;
         // sequelize.authenticate().then(()=>{
         //     this.sequelize = sequelize;
