@@ -1,32 +1,36 @@
 /**
  * Created by lzc on 2017/10/30.
  */
+let {ErrorCode, ResultData} = require(getPath('extra/ResponseData'));
+    
 class VerificationCodeService {
     constructor () {
         let VerificationCodeDao = require(getPath('dao/VerificationCodeDao'));
         this.verificationCodeDao = new VerificationCodeDao();
     }
 
-    getVerificationCodeById (id, sCallback, fCallback) {
-        return this.verificationCodeDao.getVerificationCodeById(id, sCallback, fCallback);
+    getVerificationCodeById (id, callback) {
+        return this.verificationCodeDao.getVerificationCodeById(id, callback);
     }
 
-    addVerificationCode (numeric, sCallback, fCallback) {
-        return this.verificationCodeDao.addVerificationCode(numeric, sCallback, fCallback);
+    addVerificationCode (numeric, callback) {
+        return this.verificationCodeDao.addVerificationCode(numeric, callback);
     }
 
-    deleteVerificationCode (id, sCallback, fCallback) {
-        return this.verificationCodeDao.deleteVerificationCode(id, sCallback, fCallback);
+    deleteVerificationCode (id, callback) {
+        return this.verificationCodeDao.deleteVerificationCode(id, callback);
     }
     
-    verificationCode (id, numeric, sCallback, fCallback) {
-        this.verificationCodeDao.getVerificationCodeById(id, (verificationCode) => {
-            if(verificationCode.numeric === parseInt(numeric)) {
-                sCallback();
+    verificationCode (id, numeric, callback) {
+        this.verificationCodeDao.getVerificationCodeById(id, (resultData) => {
+            if(resultData.errcode !== ErrorCode[0]) {
+                callback(resultData);
+            } else if(resultData.data.numeric === parseInt(numeric)) {
+                callback(new ResultData(ErrorCode[0], null, null));
             } else {
-                fCallback('验证码错误');
+                callback(new ResultData(ErrorCode[10002]));
             }
-        }, fCallback);
+        });
     }
 }
 

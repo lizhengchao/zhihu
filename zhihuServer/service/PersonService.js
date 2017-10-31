@@ -40,24 +40,32 @@ class PersonService {
         });
     }
 
-    updatePerson (id, name, sCallback, fCallback) {
-        return this.personDao.updatePerson(id, name, sCallback, fCallback);
+    updatePerson (person, callback) {
+        return this.personDao.updatePerson(person, callback);
     }
     
-    deletePerson (id, sCallback, fCallback) {
-        return this.personDao.deletePerson(id, sCallback, fCallback);
+    deletePerson (id, callback) {
+        return this.personDao.deletePerson(id, callback);
     }
 
-    passwordLogin (userId, password, verCodeId, verCodeNumeric, sCallback, fCallback) {
-        this.verificationCodeService.verificationCode(verCodeId, verCodeNumeric, ()=> {
-            this.getPersonInfoById(userId, (person)=> {
-                if(person.password === password) {
-                    sCallback();
-                } else {
-                    fCallback('密码错误');
+    passwordLogin (userId, password, verCodeId, verCodeNumeric, callback) {
+        this.verificationCodeService.verificationCode(verCodeId, verCodeNumeric, (resultData)=> {
+            if(resultData.errcode !== ErrorCode[0]) {
+                callback(resultData);
+                return;
+            }
+            this.getPersonInfoByPhoneNumber(userId, (resultData) => {
+                if(resultData.errcode !== ErrorCode[0]) {
+                    callback(resultData);
+                    return;
                 }
-            }, fCallback);
-        }, fCallback);
+                if(resultData.data.password == password) {
+                    callback(new ResultData(ErrorCode[0], null, null))
+                } else {
+                    callback(new ResultData(ErrorCode[10007]));
+                }
+            });
+        });
     }
 }
 

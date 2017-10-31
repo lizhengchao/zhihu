@@ -17,31 +17,25 @@ router.use('/', (req, res, next)=>{
 //获取验证码
 router.get('/getVerificationCode', (req, res)=> {
     let {numeric, img} = getImg();
-    let successCallback = ({id}) => {
-            res.send(new ResponseData(ErrorCode[0],null, {id, img}).buildStr());
-        },
-        failCallback = err => {
-            res.send(new ResponseData(ErrorCode[10001], 'get verificationCode fail, error:' + err).buildStr());
-        };
-    verificationCodeService.addVerificationCode(numeric, successCallback, failCallback);
+    let callback = (resultData) => {
+        if (resultData.errcode !== ErrorCode[0]) {
+            res.send(new ResponseData(resultData));
+        } else {
+            res.send(new ResponseData(ErrorCode[0], null, {id: resultData.data.id, img}).buildStr());
+        }
+    }        
+    verificationCodeService.addVerificationCode(numeric, callback);
 
 });
 
 //验证验证码
 router.get('/verificationCode', (req, res) => {
     var {id, numeric} = req.query,
-        successCallback = (verificationCode) => {
-            if(verificationCode.numeric === parseInt(numeric)) {
-                res.send(new ResponseData(ErrorCode[0], null, null).buildStr());
-            } else {
-                res.send(new ResponseData(ErrorCode[10002], '验证码错误', null).buildStr())
-            }
-        },
-        failCallback = err => {
-            res.send(new ResponseData(ErrorCode[10001], 'verificationCode fail, error:' + err).buildStr());
+        callback = (resultData) => {
+            res.send(new ResponseData(resultData).buildStr());
         };
 
-    verificationCodeService.getVerificationCodeById(id, successCallback, failCallback);
+    verificationCodeService.verificationCode(id, numeric, callback);
 
 })
 

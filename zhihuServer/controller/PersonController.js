@@ -37,37 +37,32 @@ router.post('/register', (req, res)=> {
 });
 
 router.get('/updateUser', (req, res) => {
-    let
-        successCallback = (person) => {
-            res.send(new ResponseData(ErrorCode[0], null, person).buildStr());
-        },
-        failCallback = (error) => {
-            res.send(new ResponseData(ErrorCode[10001], 'update user fail, error: ' + error).buildStr());
-        }
-    personService.updatePerson(req.query.id, req.query.name, successCallback, failCallback);
+    let {id, name} = req.query;
+    if(typeof id === 'undefined' || typeof name === 'undefined') {
+        res.send(new ResponseData(ErrorCode[20001], 'id或name不能为空').buildStr());
+    }
+    let person = {id, name},
+        callback = (resultData) => {
+            res.send(new ResponseData(resultData).buildStr());
+        };
+    personService.updatePerson(person, callback);
 });
 
 router.get('/deleteUser', (req, res) => {
     let
-        successCallback = () => {
-            res.send(new ResponseData(ErrorCode[0], null, null).buildStr());
-        },
-        failCallback = (error) => {
-            res.send(new ResponseData(ErrorCode[10001], 'delete user fail, error: ' + error).buildStr());
-        }
-    personService.deletePerson(req.query.id, successCallback, failCallback);
+        callback = (resultData) => {
+            res.send(new ResponseData(resultData).buildStr());
+        };
+    personService.deletePerson(req.query.id, callback);
 });
 
 router.post('/passwordLogin', (req, res) => {
     let {userId, password, verCodeId, verCodeNumeric} = req.body,
-        successCallback = () => {
-            res.send(new ResponseData(ErrorCode[0], null, null).buildStr())
-        },
-        failCallback = (error)=> {
-            res.send(new ResponseData(ErrorCode[10003], error).buildStr());
+        callback = (resultData) => {
+            res.send(new ResponseData(resultData).buildStr())
         };
 
-    personService.passwordLogin(userId, password, verCodeId, verCodeNumeric, successCallback, failCallback);
+    personService.passwordLogin(userId, password, verCodeId, verCodeNumeric, callback);
 })
 
 module.exports = router;

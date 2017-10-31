@@ -34,11 +34,11 @@ class PersonDao extends baseDao {
 
         personSeq.findById(id).then((p) => {
             if(p == null) {
-                callback(new ResultData(ErrorCode[10004]));
+                callback(new ResultData(ErrorCode[10004], '不存在id为'+id+'的用户', null));
                 return;
             }
             if(p['is_delete'] === '1') {
-                callback(new ResultData(ErrorCode[10005]));
+                callback(new ResultData(ErrorCode[10005], '不存在id为'+id+'的用户'));
                 return;
             }
             callback(new ResultData(ErrorCode[0], null, p));
@@ -50,7 +50,7 @@ class PersonDao extends baseDao {
     getPersonByPhoneNumber (phoneNumber, callback) {
         this.personSeq.findAll({where: {'phone_number': phoneNumber}}).then((p) => {
             if(p == null) {
-                callback(new ResultData(ErrorCode[10004]));
+                callback(new ResultData(ErrorCode[10004], '不存在手机号为'+phoneNumber+'的用户', null));
             }
             for(let i=0; i<p.length; i++) {
                 if(p[i]['is_delete'] != '1') {
@@ -58,7 +58,9 @@ class PersonDao extends baseDao {
                     return;
                 }
             }
-            callback(new ResultData(ErrorCode[10005]));
+            callback(new ResultData(ErrorCode[10005],  '不存在手机号为'+phoneNumber+'的用户', null));
+        }).catch((err) => {
+            callback(new ResultData(ErrorCode[10001], err, null));
         })
     }
 
@@ -79,38 +81,49 @@ class PersonDao extends baseDao {
         })
     }
     
-    updatePerson (id, name, sCallback, fCallback) {
+    updatePerson (person, callback) {
         let personSeq = this.personSeq;
 
-        personSeq.findById(id).then(person => {
-            if(person['is_delete'] === '1') {
-                fCallback && fCallback('this user has been delete');
+        personSeq.findById(person.id).then(p => {
+            if(p == null) {
+                callback(new ResultData(ErrorCode[10004], '不存在id为'+person.id+'的用户', null));
+                return;
             }
-            person.name= name;
-            person['modify_time'] = new Date();
-            person.save().then(person => {
-                sCallback && sCallback(person);
+            if(person['is_delete'] === '1') {
+                callback(new ResultData(ErrorCode[10005],  '不存在id为'+person.id+'的用户', null));
+            }
+            p.name= person.name;
+            p['modify_time'] = new Date();
+            person.save().then(pp => {
+                callback(new ResultData(ErrorCode[0], null, pp));
             }).catch(err => {
-                fCallback && fCallback(err);
+                callback(new ResultData(ErrorCode[10001], err, null));
             })
         }).catch(err => {
-            fCallback && fCallback(err);
+            callback(new ResultData(ErrorCode[10001], err, null));
         })
     }
     
-    deletePerson (id, sCallback, fCallback) {
+    deletePerson (id, callback) {
         let personSeq = this.personSeq;
 
         personSeq.findById(id).then(person => {
+            if(p == null) {
+                callback(new ResultData(ErrorCode[10004], '不存在id为'+id+'的用户', null));
+                return;
+            }
+            if(person['is_delete'] === '1') {
+                callback(new ResultData(ErrorCode[10005], '不存在id为'+id+'的用户'));
+            }
             person['is_delete']= 1;
             person['modify_time'] = new Date();
             person.save().then(person => {
-                sCallback && sCallback(person);
+                callback(new ResultData(ErrorCode[0], null, person));
             }).catch(err => {
-                fCallback && fCallback(err);
+                callback(new ResultData(ErrorCode[10001], err, null));
             })
         }).catch(err => {
-            fCallback && fCallback(err);
+            callback(new ResultData(ErrorCode[10001], err, null));
         })
 
         //真删除，改为假删除

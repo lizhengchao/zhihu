@@ -2,7 +2,8 @@
  * Created by lzc on 2017/10/30.
  */
 const baseDao = require('./baseDao'),
-    Sequelize = require('sequelize');
+    Sequelize = require('sequelize'),
+    {ErrorCode, ResultData} = require(getPath('extra/ResponseData'));
 
 class VerificationCodeDao extends baseDao {
     constructor () {
@@ -25,17 +26,21 @@ class VerificationCodeDao extends baseDao {
         this.verificationCode = VerificationCode;
     }
 
-    getVerificationCodeById (id, sCallback, fCallback) {
+    getVerificationCodeById (id, callback) {
         let verificationCode = this.verificationCode;
 
         verificationCode.findById(id).then((p) => {
-            sCallback && sCallback(p);
+            if(p == null) {
+                callback(new ResultData(ErrorCode[10004], '不存在id为'+id+'的验证码', null));
+                return;
+            }
+            callback(new ResultData(ErrorCode[0], null, p));
         }).catch((err) => {
-            fCallback && fCallback(err);
+            callback(new ResultData(ErrorCode[10001], err, null))
         })
     }
 
-    addVerificationCode (numeric, sCallback, fCallback) {
+    addVerificationCode (numeric, callback) {
         let verificationCode = this.verificationCode;
 
         verificationCode.create({
@@ -44,24 +49,28 @@ class VerificationCodeDao extends baseDao {
             'modify_time': new Date()
         }).then((v) => {
             console.info('created: ' + JSON.stringify(v));
-            sCallback && sCallback(v);
+            callback(new ResultData(ErrorCode[0], null, v));
         }).catch((err) => {
             console.info('create fail, err:' + err);
-            fCallback && fCallback(err);
+            callback(new ResultData(ErrorCode[10001], err, null))
         })
     }
 
-    deleteVerificationCode (id, sCallback, fCallback) {
+    deleteVerificationCode (id, callback) {
         let verificationCode = this.verificationCode;
 
         verificationCode.findById(id).then(verificationCode => {
+            if(verificationCode == null) {
+                callback(new ResultData(ErrorCode[10004], '不存在id为'+id+'的验证码', null));
+                return;
+            }
             verificationCode.destroy().then(() => {
-                sCallback && sCallback();
+                callback(new ResultData(ErrorCode[0], null, null));
             }).catch(err => {
-                fCallback && fCallback(err);
+                callback(new ResultData(ErrorCode[10001], err, null))
             })
         }).catch(err => {
-            fCallback && fCallback(err);
+            callback(new ResultData(ErrorCode[10001], err, null))
         })
     }
 }
