@@ -2,6 +2,8 @@
  * Created by lzc on 2017/10/27.
  */
 import React, {Component} from 'react';
+import SigninPassword from './SigninPassword';
+import SigninPhone from './SigninPhone';
 
 class Signin extends Component {
     constructor (props) {
@@ -10,7 +12,8 @@ class Signin extends Component {
         this.setSigninMode = this.setSigninMode.bind(this);
 
         this.state = {
-            curSigninMode: 0 //0:二维码登录;1:密码登录;2.手机验证码登录
+            curSigninMode: 0, //0:二维码登录;1:密码登录;2.手机验证码登录
+            needVerify: true //是否需要验证码，一天内验证过一次则不再次验证
         }
     }
 
@@ -40,35 +43,11 @@ class Signin extends Component {
                 );
             case 1:
                 return (
-                    <div>
-                        <form>
-                            <div className="sign-form">
-                                <input type="text" placeholder="手机号或邮箱"/>
-                                <input type="password" placeholder="密码"/>
-                            </div>
-                            <button className="btn-signup" type="submit">登录</button>
-                        </form>
-                        <div className="blue-text" onClick={this.setSigninMode.bind(this, 2)}>手机验证码登录</div>
-                        <div className="not-signin">无法登录</div>
-                        <div className="clear"></div>
-                        <div className="qrcode-signin-btn" onClick={this.setSigninMode.bind(this, 0)}>二维码登录</div>
-                    </div>
+                    <SigninPassword needVerify={this.state.needVerify} setSigninMode={this.setSigninMode}/>
                 );
             case 2:
                 return (
-                    <div>
-                        <form>
-                            <div className="sign-form vercode-signin">
-                                <input type="text" placeholder="手机号"/>
-                                <input type="text" placeholder="验证码"/>
-                                <div className="btn-get-vercode">获取验证码</div>
-                            </div>
-                            <button className="btn-signup" type="submit">登录</button>
-                        </form>
-                        <div className="blue-text" onClick={this.setSigninMode.bind(this, 1)}>密码登录</div>
-                        <div className="clear"></div>
-                        <div className="qrcode-signin-btn" onClick={this.setSigninMode.bind(this, 0)}>二维码登录</div>
-                    </div>
+                    <SigninPhone needVerify={this.state.needVerify} setSigninMode={this.setSigninMode}/>
                 )
         }
 

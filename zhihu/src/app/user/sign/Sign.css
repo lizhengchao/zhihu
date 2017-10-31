@@ -185,3 +185,37 @@
     background-color: white;
     cursor: pointer;
 }
+
+.sign-form.pd-signin {
+    position: relative;
+}
+
+.sign-form.pd-signin .vercode-img {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    height: 29px;
+    width: 77px;
+    padding: 9px 11px;
+    color: #0f88eb;
+    background-color: white;
+    cursor: pointer;
+}
+
+.sign-form .input-container {
+    position: relative;
+}
+
+.sign-form .input-container span {
+    position: absolute;
+    top:0px;
+    right: 0px;
+    height: 19px;
+    padding: 14px 11px;
+    color: #c33;
+    background-color: white;
+}
+
+.sign-form .input-container.vercode span { /*为验证码做特殊处理*/
+    right: 100px
+}
