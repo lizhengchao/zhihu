@@ -22,13 +22,13 @@ class PersonService {
     }
 
     register (person, callback) {
-        let {name, phoneNumber, password} = person;
+        let {phoneNumber, password} = person;
         if(!vaildatUtil.isPhoneNumber(phoneNumber)) {
-            callback(new ResultData(ErrorCode[20002], ErrorCode[20002].type, null));
+            callback(new ResultData(ErrorCode[20002]));
             return;
         }
         if(password.length < 6) {
-            callback(new ResultData(ErrorCode[20003], ErrorCode[20003].type, null));
+            callback(new ResultData(ErrorCode[20003]));
             return;
         }
         this.getPersonInfoByPhoneNumber(phoneNumber, (resultData) => {

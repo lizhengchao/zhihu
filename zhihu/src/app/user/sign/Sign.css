@@ -186,6 +186,10 @@
     cursor: pointer;
 }
 
+.sign-form.vercode-signin .btn-get-vercode.disable {
+    color: #ababab;
+}
+
 .sign-form.pd-signin {
     position: relative;
 }

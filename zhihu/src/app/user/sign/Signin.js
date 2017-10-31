@@ -24,7 +24,6 @@ class Signin extends Component {
     }
 
     render () {
-        console.info(this.state.curSigninMode);
         switch (this.state.curSigninMode) {
             case 0:
                 return (

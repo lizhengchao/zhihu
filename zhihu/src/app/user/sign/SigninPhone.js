@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SignFormInput from './SignFormInput';
+import cs from 'classnames';
 
 class SigninPhone extends Component {
     constructor (props) {
@@ -14,6 +15,10 @@ class SigninPhone extends Component {
 
         this.phoneNumber = '';
         this.verCode = '';
+
+        this.state = {
+            vercodeText: '获取验证码'
+        }
     }
     
     render () {
@@ -23,7 +28,7 @@ class SigninPhone extends Component {
                     <div className="sign-form vercode-signin">
                         <SignFormInput type="text" placeholder="手机号" onChange={(value)=>{this.phoneNumber=value;}}/>
                         <SignFormInput type="text" placeholder="验证码" onChange={(value)=>{this.verCode=value;}}/>
-                        <div className="btn-get-vercode" onClick={this.getVerCode}>获取验证码</div>
+                        <div className={cs({'disable': this.state.vercodeText !== '获取验证码','btn-get-vercode':true})} onClick={this.getVerCode}>{this.state.vercodeText}</div>
                     </div>
                     <button className="btn-signup" type="submit" onClick={this.Login}>登录</button>
                 </form>
@@ -35,7 +40,21 @@ class SigninPhone extends Component {
     }
 
     getVerCode () {
-
+        if(this.state.vercodeText !== '获取验证码') {
+            return;
+        }
+        this.setState({vercodeText: '60秒后重发'});
+        var leftTime = 60,
+            interval =
+                setInterval(() => {
+                    if(leftTime>0) {
+                        leftTime --;
+                        this.setState({vercodeText: leftTime + '秒后重发'});
+                    } else {
+                        this.setState({vercodeText: '获取验证码'});
+                        clearInterval(interval);
+                    }
+                }, 1000);
     }
 
     Login (e) {
