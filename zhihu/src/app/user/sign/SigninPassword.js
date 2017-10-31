@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SignFormInput from './SignFormInput';
+import {serverUrl} from 'extra/config';
 
 class SigninPassword extends  Component {
     constructor (props) {
@@ -70,7 +71,7 @@ class SigninPassword extends  Component {
         var me = this;
         e.preventDefault();
         window.jQuery.post({
-            url: 'http://localhost:3001/person/passwordLogin',
+            url: serverUrl + '/person/passwordLogin',
             data: {
                 userId: this.userId,
                 password: this.password,
@@ -108,7 +109,7 @@ class SigninPassword extends  Component {
     getVerCodeImg () {
         var me = this;
         window.jQuery.get({
-            url: 'http://localhost:3001/verificationCode/getVerificationCode',
+            url: serverUrl + '/verificationCode/getVerificationCode',
             success (res) {
                 res = JSON.parse(res);
                 if(res.errcode === 0 && res.data) {
