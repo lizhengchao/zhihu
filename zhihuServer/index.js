@@ -14,7 +14,8 @@ global.getPath = (absolutePath)=> {
 }
 
 let PersonRouter = require('./controller/PersonController'),
-    VerificationCodeRouter = require('./controller/VerificationCodeController');
+    VerificationCodeRouter = require('./controller/VerificationCodeController'),
+    PhoneVerifyCodeRouter = require('./controller/PhoneVerifyCodeController');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -27,5 +28,7 @@ app.get('/', (req, res)=> {
 app.use('/person', PersonRouter);
 
 app.use('/verificationCode', VerificationCodeRouter);
+
+app.use('/phoneVerifyCode', PhoneVerifyCodeRouter);
 
 app.listen(3001);
