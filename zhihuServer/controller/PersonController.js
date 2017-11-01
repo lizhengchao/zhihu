@@ -33,7 +33,7 @@ router.post('/register', (req, res)=> {
             if(resultData.errcode === ErrorCode[0]) {
                 res.send(new ResponseData(ErrorCode[0], null, resultData.data.id).buildStr());
             } else {
-                res.send(new ResponseData(ResultData).buildStr());
+                res.send(new ResponseData(resultData).buildStr());
             }
         };
     

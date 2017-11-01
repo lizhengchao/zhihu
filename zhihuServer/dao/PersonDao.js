@@ -51,6 +51,7 @@ class PersonDao extends baseDao {
         this.personSeq.findAll({where: {'phone_number': phoneNumber}}).then((p) => {
             if(p == null) {
                 callback(new ResultData(ErrorCode[10004], '不存在手机号为'+phoneNumber+'的用户', null));
+                return;
             }
             for(let i=0; i<p.length; i++) {
                 if(p[i]['is_delete'] != '1') {

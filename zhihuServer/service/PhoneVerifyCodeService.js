@@ -24,16 +24,22 @@ class PhoneVerifyCodeService {
     }
 
     sendPhoneVerifyCode (phoneNumber, callback) {
-        var code = parseInt(Math.random()*1000000); //生成6位短信验证码
-        
-        this.addPhoneVerifyCode(phoneNumber, code, (resultData) => {
+        this.personDao.getPersonByPhoneNumber(phoneNumber, (resultData) => { //先检查手机号是否存在
             if(resultData.errcode !== ErrorCode[0]) {
                 callback(resultData);
-            } else {
-                //TODO: 先插表，再真正的发短信
-                callback(new ResultData(ErrorCode[0], null, null));
+                return;
             }
-        })
+            var code = parseInt(Math.random()*1000000); //生成6位短信验证码
+
+            this.addPhoneVerifyCode(phoneNumber, code, (resultData) => {
+                if(resultData.errcode !== ErrorCode[0]) {
+                    callback(resultData);
+                } else {
+                    //TODO: 先插表，再真正的发短信
+                    callback(new ResultData(ErrorCode[0], null, null));
+                }
+            })
+        });
     }
 
     verificationPhoneCode (phoneNumber, code, callback) {

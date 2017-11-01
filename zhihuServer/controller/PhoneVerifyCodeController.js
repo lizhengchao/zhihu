@@ -18,7 +18,7 @@ router.get('/sendPhoneVerifyCode', (req, res)=> {
     let {phoneNumber} = req.query;
     let callback = (resultData) => {
         if (resultData.errcode !== ErrorCode[0]) {
-            res.send(new ResponseData(resultData.errcode, '发送验证码失败', null).buildStr());
+            res.send(new ResponseData(resultData.errcode, resultData.msg, null).buildStr());
         } else {
             res.send(new ResponseData(ErrorCode[0], null, null).buildStr());
         }

@@ -78,6 +78,8 @@ class SigninPhone extends Component {
                 res = JSON.parse(res);
                 if(res.errcode === 0) {
                     updateSendBtnUI();
+                } else if(res.errcode === 10005){
+                    me.setState({phoneErrMsg: '该手机号未注册'});
                 } else {
                     me.setState({phoneErrMsg: '发送验证码失败'});
                     console.error('发送验证码失败, err:' + res.msg);
