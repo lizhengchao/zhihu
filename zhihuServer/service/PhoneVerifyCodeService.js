@@ -6,7 +6,9 @@ let {ErrorCode, ResultData} = require(getPath('extra/ResponseData'));
 class PhoneVerifyCodeService {
     constructor () {
         let PhoneVerifyCodeDao = require(getPath('dao/PhoneVerifyCodeDao'));
+        let PersonDao = require(getPath('dao/PersonDao'));
         this.phoneVerifyCodeDao = new PhoneVerifyCodeDao();
+        this.personDao = new PersonDao();
     }
 
     getPhoneVerifyCodeById (id, callback) {
@@ -43,7 +45,13 @@ class PhoneVerifyCodeService {
                     now = new Date().getTime();
                 for(let i=0; i< phoneVerifyCodes.length; i++) {
                     if(now - phoneVerifyCodes[i]['create_time'].getTime() <= 3*60*1000) { //验证码有效时间3分钟
-                        callback(new ResultData(ErrorCode[0], null, null));
+                        this.personDao.getPersonByPhoneNumber(phoneNumber, (resultData) => {
+                            if(resultData.errcode === ErrorCode[0]) {
+                                callback(new ResultData(ErrorCode[0], null, resultData.data.id));
+                            } else {
+                                callback(resultData);
+                            }
+                        });
                         return;
                     }
                 }

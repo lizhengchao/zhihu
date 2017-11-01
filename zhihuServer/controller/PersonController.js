@@ -29,8 +29,12 @@ router.post('/register', (req, res)=> {
         return;
     }
     let person = {name, password, phoneNumber},
-        callback = (ResultData) => {
-            res.send(new ResponseData(ResultData).buildStr());
+        callback = (resultData) => {
+            if(resultData.errcode === ErrorCode[0]) {
+                res.send(new ResponseData(ErrorCode[0], null, resultData.data.id).buildStr());
+            } else {
+                res.send(new ResponseData(ResultData).buildStr());
+            }
         };
     
     personService.register(person, callback);

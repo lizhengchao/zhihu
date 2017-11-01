@@ -7,8 +7,8 @@ import SignFormInput from './SignFormInput';
 import {serverUrl} from 'extra/config';
 
 class SigninPassword extends  Component {
-    constructor (props) {
-        super(props);
+    constructor (props, context) {
+        super(props, context);
 
         this.passwordSignin = this.passwordSignin.bind(this);
         this.getVerCodeImg = this.getVerCodeImg.bind(this);
@@ -81,8 +81,8 @@ class SigninPassword extends  Component {
             success (res) {
                 res = JSON.parse(res);
                 switch (res.errcode) {
-                    case 0: alert('登录成功');break;
-                    //TODO: 登录完成后的逻辑
+                    case 0: me.context.addUserInfoAndToHome(res.data);
+                        break;
                     case 10002: //验证码错误
                         me.setState({verCodeErrMsg: '验证码错误'});
                         break;
@@ -126,6 +126,10 @@ class SigninPassword extends  Component {
             }
         })
     }
+}
+
+SigninPassword.contextTypes = {
+    addUserInfoAndToHome: PropTypes.func
 }
 
 SigninPassword.propTypes = {

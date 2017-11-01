@@ -7,7 +7,7 @@ import Sign from 'app/user/sign/Sign';
 import {Redirect} from 'react-router';
 import {BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-const globalFilter = () => {
+const globalFilter = (match) => {
     function getCookie(c_name) {
         var c_start, c_end;
         if (document.cookie.length>0)
@@ -23,8 +23,11 @@ const globalFilter = () => {
         }
         return ""
     }
+
     if(typeof getCookie('userId') != 'undefined' && getCookie('userId') != '') {
-        return (<Redirect to="/home"/>);
+        return (<div></div>)
+    } else if(match.location.pathname.startsWith('/sign')){
+        return (<div></div>)
     } else {
         return (<Redirect to="/sign"/>);
     }
@@ -33,7 +36,7 @@ const globalFilter = () => {
 const router = () => (
     <Router>
         <div>
-            <Route exact  path="/" render={globalFilter}/>
+            <Route path="/" render={globalFilter}/>
             <Route path="/home" component={Home}/>
             <Route path="/sign" component={Sign}/>
         </div>

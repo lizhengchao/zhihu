@@ -52,6 +52,28 @@ class Sign extends Component {
             </div>
         )
     }
+
+    addUserInfoAndToHome (userId) {
+        var setCookie = function(c_name,value,expiredays) {
+            var exdate=new Date()
+            exdate.setDate(exdate.getDate()+expiredays)
+            document.cookie=c_name+ "=" + encodeURI(value) +
+                ((expiredays==null) ? "" : ";expires="+exdate.toGMTString()) + "; path=/"
+        };
+        setCookie('userId', userId);
+
+        this.context.router.history.push('/home');
+    }
+
+    getChildContext () {
+        return {
+            addUserInfoAndToHome: this.addUserInfoAndToHome.bind(this)
+        }
+    }
+}
+
+Sign.childContextTypes = {
+    addUserInfoAndToHome: PropTypes.func
 }
 
 Sign.contextTypes = {

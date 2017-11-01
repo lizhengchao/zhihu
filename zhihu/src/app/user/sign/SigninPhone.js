@@ -8,8 +8,8 @@ import cs from 'classnames';
 import {serverUrl} from 'extra/config';
 
 class SigninPhone extends Component {
-    constructor (props) {
-        super(props);
+    constructor (props, context) {
+        super(props, context);
 
         this.Login = this.Login.bind(this);
         this.getVerCode = this.getVerCode.bind(this);
@@ -110,8 +110,7 @@ class SigninPhone extends Component {
             success (res) {
                 res = JSON.parse(res);
                 if(res.errcode === 0) {
-                    alert('登录成功');
-                    //TODO: 登录成功逻辑
+                    me.context.addUserInfoAndToHome(res.data);
                 } else if(res.errcode === 10008) {
                     me.setState({verCodeErrMsg: '短信验证码失效'});
                 } else  {
@@ -129,6 +128,10 @@ class SigninPhone extends Component {
 SigninPhone.propTypes = {
     needVerify: PropTypes.bool,
     setSigninMode: PropTypes.func
+}
+
+SigninPhone.contextTypes = {
+    addUserInfoAndToHome: PropTypes.func
 }
 
 export default SigninPhone;

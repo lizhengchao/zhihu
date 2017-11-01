@@ -4,10 +4,11 @@
 import React, {Component} from 'react';
 import SignFormInput from './SignFormInput';
 import {serverUrl} from 'extra/config';
+import PropTypes from 'prop-types';
 
 class Signup extends Component {
-    constructor (props) {
-        super(props);
+    constructor (props, context) {
+        super(props, context);
 
         this.register = this.register.bind(this);
 
@@ -68,8 +69,7 @@ class Signup extends Component {
             success (res) {
                 res = JSON.parse(res);
                 if(res.errcode === 0) {
-                    alert('注册成功');
-                    //TODO:注册成功的逻辑
+                    me.context.addUserInfoAndToHome(res.data);
                 } else if(res.errcode === 20002) {
                     me.setState({phoneNumberErrorMsg: '手机号格式错误'});
                 } else if (res.errcode === 20003) {
@@ -87,6 +87,10 @@ class Signup extends Component {
             }
         })
     }
+}
+
+Signup.contextTypes = {
+    addUserInfoAndToHome: PropTypes.func
 }
 
 export default Signup;

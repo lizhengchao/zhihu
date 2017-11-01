@@ -60,7 +60,7 @@ class PersonService {
                     return;
                 }
                 if(resultData.data.password == password) {
-                    callback(new ResultData(ErrorCode[0], null, null))
+                    callback(new ResultData(ErrorCode[0], null, resultData.data.id))
                 } else {
                     callback(new ResultData(ErrorCode[10007]));
                 }
