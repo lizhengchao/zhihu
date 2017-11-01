@@ -75,7 +75,7 @@ class Signup extends Component {
                 } else if (res.errcode === 20003) {
                     me.setState({passwordErrorMsg: '密码长度不能小于6位'});
                 } else if (res.errcode === 10006) {
-                    me.setState({phoneNumberErrorMsg: '手机号已存在'});
+                    me.setState({phoneNumberErrorMsg: '手机号已注册'});
                 } else {
                     me.setState({phoneNumberErrorMsg: '服务异常'});
                     console.warn(res.msg);
