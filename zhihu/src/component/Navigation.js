@@ -24,6 +24,7 @@ class Navigation extends Component {
                 <div className={cs({'search-question-container': true, 'searching': this.state.searching})}>
                     <input className="nav-search-input" placeholder="搜索你的感兴趣的内容..." onFocus={()=>{this.setState({searching: true})}}
                            onBlur={()=>{this.setState({searching: false})}}/>
+                    <img className="nav-search-img" src={this.state.searching ? require('resource/img/search2.png') : require('resource/img/search1.png')}/>
                     <button className="nav-question-btn">提问</button>
                 </div>
                 <div style={{width: '100px'}}></div>
