@@ -1,0 +1,66 @@
+.home-main {
+    width: 1000px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.home-main .left-part {
+    flex: 2;
+    margin-right: 10px;
+}
+
+.home-main .right-part {
+    flex: 1;
+    background-color: red;
+}
+
+.home-main .top-part {
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-main .top-item-container {
+
+}
+
+.home-main .top-item {
+    float: left;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: black;
+}
+
+.home-main .top-item:hover {
+    color: gray;
+}
+
+.home-main .home-list .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.home-main .home-list .user {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.home-main .home-list .user img {
+    height: 24px;
+    width: 24px;
+}
+
+.home-main .home-list .user .user-name {
+    font-weight: bold;
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+.home-main .home-list .user .user-word {
+    font-size: 13px;
+    padding-left: 10px;
+}

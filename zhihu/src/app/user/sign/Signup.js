@@ -82,8 +82,9 @@ class Signup extends Component {
                 }
             },
             error (e) {
-                console.err('register err msg:' + e);
-                this.setState({phoneNumberErrorMsg: e})
+                debugger;
+                console.error('register err msg:' + JSON.stringify(e));
+                me.setState({phoneNumberErrorMsg: JSON.stringify(e)})
             }
         })
     }

@@ -19,3 +19,16 @@ a {
 .clear {
   clear: both;
 }
+
+.card {
+  background-color: white;
+  color: black;
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  border-radius: 2px;
+  padding: 20px 16px;
+  margin-top: 10px;
+}
+
+.gray {
+  color: gray;
+}

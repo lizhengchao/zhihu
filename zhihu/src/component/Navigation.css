@@ -6,14 +6,19 @@
     height: 52px;
     border-bottom: 1px solid rgba(30,35,42,.06);
     background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     font-size: 15px;
 }
 
+.nav-container {
+    width: 1000px;
+    height: 100%;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .nav-logo {
-    margin-left: 175px;
     background: transparent no-repeat url('../resource/img/logo.png');
     background-size: contain;
     width: 72px;
@@ -24,7 +29,8 @@
     color: #8590a6;
 }
 
-.nav-item:hover {
+
+.nav-item:hover,.nav-item.select {
     color: black;
 }
 
