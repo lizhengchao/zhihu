@@ -40,7 +40,21 @@
     margin-top: 9px;
 }
 
-.action .comment,.share,.collect,.thank,.more {
+.action .comment,.share,.collect,.thank,.more,.close {
     margin-left: 20px;
     cursor: pointer;
+}
+
+.action .close {
+    color: #175199;
+    float: right;
+    flex-grow: 1;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.action .close:hover {
+    color: gray;
 }

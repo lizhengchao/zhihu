@@ -16,6 +16,7 @@ class Action extends React.Component {
                 <div className="collect">收藏</div>
                 <div className="thank">感谢</div>
                 <svg className="more" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em" data-reactid="312"><path d="M5 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fillRule="evenodd" data-reactid="313"></path></svg>
+                <div className="close" onClick={this.props.closeClick}>收起<img src={require('resource/img/up.jpg')}/></div>
             </div>
         );
     }
@@ -23,7 +24,8 @@ class Action extends React.Component {
 
 Action.propTypes = {
     approveCount: PropTypes.number,
-    commentCount: PropTypes.number
+    commentCount: PropTypes.number,
+    closeClick: PropTypes.func
 }
 
 export default Action;
