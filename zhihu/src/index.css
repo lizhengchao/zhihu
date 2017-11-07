@@ -32,3 +32,7 @@ a {
 .gray {
   color: gray;
 }
+
+.disable {
+  display: none
+}

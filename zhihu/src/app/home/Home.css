@@ -1,3 +1,7 @@
+body {
+    background-color:  #f3f3f3;
+}
+
 .home-main {
     width: 1000px;
     margin: 0 auto;
@@ -11,7 +15,7 @@
 
 .home-main .right-part {
     flex: 1;
-    background-color: red;
+    /*background-color: red;*/
 }
 
 .home-main .top-part {
@@ -37,21 +41,28 @@
     color: gray;
 }
 
+.home-main .home-list .topic {
+    cursor: pointer;
+}
+
 .home-main .home-list .title {
     font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 .home-main .home-list .user {
     margin-top: 20px;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .home-main .home-list .user img {
     height: 24px;
     width: 24px;
+    border-radius: 2px;
 }
 
 .home-main .home-list .user .user-name {
@@ -64,3 +75,81 @@
     font-size: 13px;
     padding-left: 10px;
 }
+
+.home-main .home-list .content {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.home-main .home-list .content .content-img {
+    width: 200px;
+    height: 100px;
+    border-radius: 5px;
+    margin-right: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.home-main .home-list .content .text {
+    flex: 1;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+.home-main .home-list .content .text .read-all {
+    color: #175199;
+    margin-left: 5px;
+}
+.home-main .home-list .content .text .read-all:hover {
+    color: gray;
+}
+
+.home-main .home-list .action {
+    display: flex;
+    align-items: center;
+    color: gray;
+    margin-top: 20px;
+}
+
+.home-main .home-list .action .approve,.disapprove {
+    background-color: #e4ebf3;
+    border-color: #e4ebf3;
+    border-radius: 5px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.home-main .home-list .action .disapprove {
+    margin-left: 10px;
+}
+
+.home-main .home-list .action .triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid #2d84cc;
+    float: left;
+    margin-top: 9px;
+    margin-right: 10px;
+}
+
+.home-main .home-list .action .triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid #2d84cc;
+    float: left;
+    margin-top: 9px;
+}
+
+.home-main .home-list .action .comment,.share,.collect,.thank,.more {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
