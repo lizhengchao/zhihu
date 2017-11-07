@@ -1,0 +1,46 @@
+.action {
+    display: flex;
+    align-items: center;
+    color: gray;
+    margin-top: 20px;
+}
+
+.action .approve,.disapprove {
+    background-color: #e4ebf3;
+    border-color: #e4ebf3;
+    border-radius: 5px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.action .disapprove {
+    margin-left: 10px;
+}
+
+.action .triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid #2d84cc;
+    float: left;
+    margin-top: 9px;
+    margin-right: 10px;
+}
+
+.action .triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid #2d84cc;
+    float: left;
+    margin-top: 9px;
+}
+
+.action .comment,.share,.collect,.thank,.more {
+    margin-left: 20px;
+    cursor: pointer;
+}

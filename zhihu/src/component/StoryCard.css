@@ -1,0 +1,79 @@
+.story-card.topic {
+    cursor: pointer;
+}
+
+.story-card .topic .fork {
+    width: 18px;
+    height: 18px;
+    float: right;
+    opacity: 0;
+    tooltip: '不感兴趣'
+}
+
+.story-card .card:hover .topic .fork {
+    opacity: 1;
+}
+
+.story-card .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.story-card .user {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.story-card .user img {
+    height: 24px;
+    width: 24px;
+    border-radius: 2px;
+}
+
+.story-card .user .user-name {
+    font-weight: bold;
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+.story-card .user .user-word {
+    font-size: 13px;
+    padding-left: 10px;
+}
+
+.story-card .content {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.content .no-dom-text {
+    display: flex;
+    align-items: center;
+}
+
+.story-card .content .content-img {
+    width: 200px;
+    height: 100px;
+    border-radius: 5px;
+    margin-right: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.story-card .content .text {
+    flex: 1;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+.story-card .content .text .read-all {
+    color: #175199;
+    margin-left: 5px;
+}
+.story-card .content .text .read-all:hover {
+    color: gray;
+}
