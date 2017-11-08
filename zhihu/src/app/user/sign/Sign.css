@@ -24,7 +24,7 @@
     margin: 0px auto;
 }
 
-.sign-main .nav {
+.sign-main .tab-nav {
     float: left;
     width: 50%;
     font-size: 18px;
@@ -32,13 +32,13 @@
     position: relative;
 }
 
-.sign-main .nav a {
+.sign-main .tab-nav a {
     color: inherit;
     display: block;
     width: 100%;
 }
 
-.sign-main .nav.active {
+.sign-main .tab-nav.active {
     color: #0f88eb;
 }
 

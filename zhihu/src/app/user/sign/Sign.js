@@ -39,8 +39,8 @@ class Sign extends Component {
                     <div className="logo hide-text">知乎</div>
                     <div className="des">与世界分享你的知识、经验和见解</div>
                     <div className="tab-navs" cur-nav={this.state.curNav}>
-                        <div className={cs({nav: true, active: this.state.curNav === 0})} onClick={this.navClick.bind(this, 0)}><Link to={match.url + "/signup"}>注册</Link></div>
-                        <div className={cs({nav: true, active: this.state.curNav === 1})} onClick={this.navClick.bind(this, 1)}><Link to={match.url + "/signin"}>登录</Link></div>
+                        <div className={cs({'tab-nav': true, active: this.state.curNav === 0})} onClick={this.navClick.bind(this, 0)}><Link to={match.url + "/signup"}>注册</Link></div>
+                        <div className={cs({'tab-nav': true, active: this.state.curNav === 1})} onClick={this.navClick.bind(this, 1)}><Link to={match.url + "/signin"}>登录</Link></div>
                         <p className="content"/>
                         <div className="clear"></div>
                     </div>
