@@ -73,7 +73,22 @@ class Home extends Component {
                         </div>
                     </div>
                     <div className="right-part">
-                        
+                        <div className="card category-list">
+                            <div className="category live"><div className="img" style={{backgroundImage: 'url('+require('resource/img/live.jpg')+')'}}></div>Live</div>
+                            <div className="category book"><div className="img" style={{backgroundImage: 'url('+require('resource/img/book.jpg')+')'}}></div>书店</div>
+                            <div className="category desk"><div className="img" style={{backgroundImage: 'url('+require('resource/img/desk.jpg')+')'}}></div>圆桌</div>
+                            <div className="category pan"><div className="img" style={{backgroundImage: 'url('+require('resource/img/pan.jpg')+')'}}></div>专栏</div>
+                            <div className="category money"><div className="img" style={{backgroundImage: 'url('+require('resource/img/money.jpg')+')'}}></div>付费资讯</div>
+                        </div>
+                        <div className="card side-bar">
+                            <div className="item">我的收藏</div>
+                            <div className="item">我关注的问题</div>
+                            <div className="item">我的邀请</div>
+                            <div className="item">我的礼券</div>
+                            <div className="item">社区服务中心</div>
+                            <div className="item">版权服务中心</div>
+                            <div className="item">公共编辑动态</div>
+                        </div>
                     </div>
                 </div>
             </div>

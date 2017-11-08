@@ -43,12 +43,12 @@ class StoryCard extends React.Component {
                         <div className={cs({'content-img': true, disable: this.state.answerImg == ''})} style={{backgroundImage: 'url(' + this.state.answerImg + ')'}}></div>
                         <div className="text">
                             {this.state.answerTextNoDom.length <=80 ? this.state.answerTextNoDom : this.state.answerTextNoDom.substr(0, 80) + '...'}
-                            <span className={cs({'read-all': true, disable: this.state.answerTextNoDom.length <= 80})}>阅读全文<div className="down"></div></span>
+                            <span className={cs({'read-all': true, disable: this.state.answerTextNoDom.length <= 80})}>阅读全文</span>
                         </div>
                     </div>
                     <div className={cs({'text': true, disable: !this.state.detail})} dangerouslySetInnerHTML={{__html: this.state.answerText}}></div>
                 </div>
-                <Action approveCount={this.state.approveCount} commentCount={this.state.commentCount} closeClick={()=>{this.setState({detail: false})}}/>
+                <Action approveCount={this.state.approveCount} commentCount={this.state.commentCount} showClose={this.state.detail} closeClick={()=>{this.setState({detail: false})}}/>
             </div>
         );
     }

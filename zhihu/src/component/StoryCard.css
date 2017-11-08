@@ -75,10 +75,12 @@
     margin-left: 5px;
 }
 
-.story-card .content .text .read-all .down {
+.story-card .content .text .read-all:after {
+    content: '';
     height: 10px;
     width: 16px;
     background: url('../resource/img/down.jpg') no-repeat center;
+    display: inline-block;
 }
 
 .story-card .content .text .read-all:hover {

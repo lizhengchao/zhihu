@@ -9,12 +9,12 @@ body {
 }
 
 .home-main .left-part {
-    flex: 2;
+    flex: 7;
     margin-right: 10px;
 }
 
 .home-main .right-part {
-    flex: 1;
+    flex: 3;
     /*background-color: red;*/
 }
 
@@ -41,3 +41,51 @@ body {
     color: gray;
 }
 
+.home-main .right-part .category-list {
+    display: flex;
+    flex-wrap: wrap;
+    color: gray;
+    text-align: center;
+    padding-bottom: 0px;
+    padding-top: 20px;
+}
+
+.home-main .right-part .category-list .category {
+    width: 33%;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.home-main .right-part .category-list .category .img {
+    width: 27px;
+    height: 27px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0px auto 10px auto;
+}
+
+.home-main .right-part .category-list .category.live:hover {
+    color: #ffcf00;
+}
+
+.home-main .right-part .category-list .category.book:hover {
+    color: #43d480;
+}
+
+.home-main .right-part .category-list .category.desk:hover,.category.pan:hover,.category.money:hover {
+    color: #5478f0;
+}
+
+.home-main .right-part .side-bar {
+    padding: 10px 0;
+    color: #8590a6;
+}
+
+.home-main .right-part .side-bar .item {
+    cursor: pointer;
+    padding: 10px 0px 10px 50px;
+}
+
+.home-main .right-part .side-bar .item:hover {
+    background-color: #f4f8fb;
+}
