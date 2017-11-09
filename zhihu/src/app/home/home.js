@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import Navigation from 'component/Navigation';
-import StoryCard from 'component/StoryCard';
+import StoryCard from 'app/answer/StoryCard';
 import NavigationPartingLine from 'component/NavigationPartingLine';
 import './Home.css';
 import cs from 'classnames';

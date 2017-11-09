@@ -4,8 +4,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './StoryCard.css';
-import Action from 'component/Action';
-import Comment from 'component/Comment';
+import Action from './Action';
+import Comment from './Comment';
 import cs from 'classnames';
 
 class StoryCard extends React.Component {
@@ -73,6 +73,7 @@ class StoryCard extends React.Component {
                 </div>
                 <Action approveCount={this.state.approveCount} commentCount={this.state.commentCount} showClose={this.state.detail}
                         closeClick={()=>{this.setState({detail: false})}} fixedBottom={this.state.fixedBottom}/>
+                <Comment answerId={this.props.data.id}/>
             </div>
         );
     }

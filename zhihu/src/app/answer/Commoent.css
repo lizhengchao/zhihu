@@ -1,0 +1,87 @@
+:local .comment {
+    border: 1px solid #e7eaf2;
+    margin-top: 20px;
+    padding: 20px 16px;
+}
+
+:local .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e7eaf2;
+}
+
+:local .commentCount {
+    font-weight: bold;
+}
+
+:local .sortType {
+    font-size: 14px;
+    color: #175199;
+    cursor: pointer;
+}
+
+:local .commentItem {
+    padding: 10px;
+    border-bottom: 1px solid #e7eaf2;
+}
+
+:local .userContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+:local .user img {
+    height: 24px;
+    width: 24px;
+    border-radius: 2px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+:local .user span {
+    cursor: pointer;
+}
+
+:local .time {
+    color: gray;
+    font-size: 14px;
+}
+
+:local .content {
+    margin-top: 10px;
+}
+
+:local .commentAction {
+    color: #9fadc7;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+:local .actionItem {
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+:local .commentAction .actionItem.hoverShow {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+:local .commentAction:hover .actionItem.hoverShow {
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+:local .actionItem img {
+    margin-right: 5px;
+}
+
+:local .actionItem span {
+    margin-right: 10px;
+}

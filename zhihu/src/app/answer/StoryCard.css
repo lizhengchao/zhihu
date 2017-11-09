@@ -79,7 +79,7 @@
     content: '';
     height: 10px;
     width: 16px;
-    background: url('../resource/img/down.jpg') no-repeat center;
+    background: url('../../resource/img/down.jpg') no-repeat center;
     display: inline-block;
 }
 
