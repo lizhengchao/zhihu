@@ -7,9 +7,29 @@ import cs from 'classnames';
 import './Action.css';
 
 class Action extends React.Component {
+
+    constructor (props) {
+        super(props);
+
+
+        this.state = {
+            actionWidth: '100%'
+        }
+    }
+
+    componentWillReceiveProps (newProps) {
+        if(newProps.fixedBottom) {
+            let actionDom = this.refs['action'],
+                actionParentWidth = window.$(actionDom.parentNode).width();
+            this.setState({actionWidth: actionParentWidth});
+        } else {
+            this.setState({actionWidth: '100%'});
+        }
+    }
+
     render () {
         return (
-            <div className="action">
+            <div className={cs({action: true, 'fixed-bottom': this.props.fixedBottom})} style={{width: this.state.actionWidth}} ref="action">
                 <div className="approve"><div className="triangle-up"></div>{this.props.approveCount}</div>
                 <div className="disapprove"><div className="triangle-down"></div></div>
                 <div className="comment">{this.props.commentCount}人评论</div>
@@ -27,7 +47,12 @@ Action.propTypes = {
     approveCount: PropTypes.number,
     commentCount: PropTypes.number,
     showClose: PropTypes.bool,
-    closeClick: PropTypes.func
+    closeClick: PropTypes.func,
+    fixedBottom: PropTypes.bool
+};
+
+Action.defaultProps = {
+    fixedBottom: false
 }
 
 export default Action;

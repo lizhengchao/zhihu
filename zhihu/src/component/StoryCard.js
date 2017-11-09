@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './StoryCard.css';
 import Action from 'component/Action';
+import Comment from 'component/Comment';
 import cs from 'classnames';
 
 class StoryCard extends React.Component {
@@ -24,13 +25,35 @@ class StoryCard extends React.Component {
             approveCount: props.data.approveCount,
             commentCount: props.data.commentCount,
             answerTextNoDom: props.data.answerText.replace(matchDom, ''),
-            detail: false //当前块显示的是详细内容还是大体内容
+            detail: false, //当前块显示的是详细内容还是大体内容
+            fixedBottom: false //是否需要将Action固定在屏幕下方
         }
+    }
+
+    componentDidMount () {
+        window.addEventListener('scroll', (e)=>{
+            var storyCard = this.refs['storyCard'];
+            let scrollTop = window.$(window).scrollTop(),
+                clientHeight = document.documentElement.clientHeight,
+                storyCardOffsetTop = storyCard.offsetTop,
+                storyCardOffsetHeight = storyCard.offsetHeight;
+
+                if(storyCardOffsetTop - scrollTop <= clientHeight*0.5
+                    && storyCardOffsetTop - scrollTop + storyCardOffsetHeight >= clientHeight) {
+                        if(!this.state.fixedBottom) {
+                            this.setState({fixedBottom: true});
+                        }
+                }  else {
+                    if(this.state.fixedBottom) {
+                        this.setState({fixedBottom: false});
+                    }
+                }
+        })
     }
     
     render () {
         return (
-            <div className="card story-card">
+            <div className="card story-card" ref="storyCard">
                 <div className="gray topic">{this.state.from}<img className="fork" src={require('resource/img/fork.jpg')}/></div>
                 <div className="title">{this.state.title}</div>
                 <div className="user">
@@ -48,7 +71,8 @@ class StoryCard extends React.Component {
                     </div>
                     <div className={cs({'text': true, disable: !this.state.detail})} dangerouslySetInnerHTML={{__html: this.state.answerText}}></div>
                 </div>
-                <Action approveCount={this.state.approveCount} commentCount={this.state.commentCount} showClose={this.state.detail} closeClick={()=>{this.setState({detail: false})}}/>
+                <Action approveCount={this.state.approveCount} commentCount={this.state.commentCount} showClose={this.state.detail}
+                        closeClick={()=>{this.setState({detail: false})}} fixedBottom={this.state.fixedBottom}/>
             </div>
         );
     }
