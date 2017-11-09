@@ -26,7 +26,8 @@ class StoryCard extends React.Component {
             commentCount: props.data.commentCount,
             answerTextNoDom: props.data.answerText.replace(matchDom, ''),
             detail: false, //当前块显示的是详细内容还是大体内容
-            fixedBottom: false //是否需要将Action固定在屏幕下方
+            fixedBottom: false, //是否需要将Action固定在屏幕下方
+            commentOpen: false //评论模块是否打开
         }
     }
 
@@ -72,8 +73,8 @@ class StoryCard extends React.Component {
                     <div className={cs({'text': true, disable: !this.state.detail})} dangerouslySetInnerHTML={{__html: this.state.answerText}}></div>
                 </div>
                 <Action approveCount={this.state.approveCount} commentCount={this.state.commentCount} showClose={this.state.detail}
-                        closeClick={()=>{this.setState({detail: false})}} fixedBottom={this.state.fixedBottom}/>
-                <Comment answerId={this.props.data.id}/>
+                        closeClick={()=>{this.setState({detail: false})}} fixedBottom={this.state.fixedBottom} commentClick={(commentOpen)=> {this.setState({commentOpen: commentOpen})}}/>
+                <Comment answerId={this.props.data.id} open={this.state.commentOpen}/>
             </div>
         );
     }

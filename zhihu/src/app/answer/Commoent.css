@@ -45,6 +45,16 @@
     cursor: pointer;
 }
 
+:local .user .reply {
+    display: inline-block;
+}
+
+:local .user .reply .to{
+    color: gray;
+    font-size: 14px;
+    margin: 0 10px;
+}
+
 :local .time {
     color: gray;
     font-size: 14px;
