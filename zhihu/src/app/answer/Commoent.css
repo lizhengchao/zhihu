@@ -4,155 +4,175 @@
     padding: 20px 16px;
 }
 
+:local .closeBtn {
+    background: rgba(231,234,241,.95);
+    border-radius: 3px;
+    position: fixed;
+    height: 30px;
+    width: 93px;
+    bottom: 30px;
+    right: 570px;
+    font-size: 13px;
+    color: #8590a6;
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+:local .closeBtn:hover {
+    color: #7a8599;
+}
+
 :local .top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e7eaf2;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding-bottom: 20px;
+border-bottom: 1px solid #e7eaf2;
 }
 
 :local .commentCount {
-    font-weight: bold;
+font-weight: bold;
 }
 
 :local .sortType {
-    font-size: 14px;
-    color: #175199;
-    cursor: pointer;
+font-size: 14px;
+color: #175199;
+cursor: pointer;
 }
 
 :local .commentItem {
-    padding: 10px;
-    border-bottom: 1px solid #e7eaf2;
+padding: 10px;
+border-bottom: 1px solid #e7eaf2;
 }
 
 :local .userContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
 :local .user img {
-    height: 24px;
-    width: 24px;
-    border-radius: 2px;
-    margin-right: 10px;
-    cursor: pointer;
+height: 24px;
+width: 24px;
+border-radius: 2px;
+margin-right: 10px;
+cursor: pointer;
 }
 
 :local .user span {
-    cursor: pointer;
+cursor: pointer;
 }
 
 :local .user .reply {
-    display: inline-block;
+display: inline-block;
 }
 
 :local .user .reply .to{
-    color: gray;
-    font-size: 14px;
-    margin: 0 10px;
+color: gray;
+font-size: 14px;
+margin: 0 10px;
 }
 
 :local .time {
-    color: gray;
-    font-size: 14px;
+color: gray;
+font-size: 14px;
 }
 
 :local .content {
-    margin-top: 10px;
+margin-top: 10px;
 }
 
 :local .commentAction {
-    color: #9fadc7;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
+color: #9fadc7;
+margin-top: 10px;
+display: flex;
+align-items: center;
 }
 
 :local .actionItem {
-    cursor: pointer;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
+cursor: pointer;
+font-size: 14px;
+display: flex;
+align-items: center;
 }
 
 :local .commentAction .actionItem.hoverShow {
-    opacity: 0;
-    transition: opacity 0.2s;
+opacity: 0;
+transition: opacity 0.2s;
 }
 
 :local .commentAction:hover .actionItem.hoverShow {
-    opacity: 1;
-    transition: opacity 0.2s;
+opacity: 1;
+transition: opacity 0.2s;
 }
 
 :local .actionItem img {
-    margin-right: 5px;
+margin-right: 5px;
 }
 
 :local .actionItem span {
-    margin-right: 10px;
+margin-right: 10px;
 }
 
 :local .page {
-    display: flex;
-    justify-content: center;
-    padding: 15px 0px;
+display: flex;
+justify-content: center;
+padding: 15px 0px;
 }
 
 :local .pageItem {
-    margin: 0 10px;
-    cursor: pointer;
+margin: 0 10px;
+cursor: pointer;
 }
 :local .pageItem:hover {
-    color: gray
+color: gray
 }
 
 :local .pageItem.currPage {
-    color: #8590a6
+color: #8590a6
 }
 
 :local .commentInputContainer {
-    margin-top: 10px;
-    height: 35px;
-    position: relative;
+margin-top: 10px;
+height: 35px;
+position: relative;
 }
 
 :local .commentInput {
-    background-color: #f7f8fa;
-    padding: 9px 2.5%;
-    height: 15px;
-    width: 95%;
-    border: 1px solid #e7eaf1;
-    border-radius: 3px;
-    color: #8590a6;
-    z-index: 1;
-    transition: all 0.2s linear;
+background-color: #f7f8fa;
+padding: 9px 2.5%;
+height: 15px;
+width: 95%;
+border: 1px solid #e7eaf1;
+border-radius: 3px;
+color: #8590a6;
+z-index: 1;
+transition: all 0.2s linear;
 }
 
 :local .inputing .commentInput {
-    width: 75%;
-    background-color: white;
+width: 75%;
+background-color: white;
 }
 
 :local .submitBtn {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 35px;
-    width: 16%;
-    padding: 0;
-    background-color: #0f88eb;
-    color: white;
-    border: 0;
-    border-radius: 3px;
-    transition: transform 0.2s linear;
-    cursor: pointer;
-    transform: scale(0, 0);
+position: absolute;
+right: 0;
+top: 0;
+height: 35px;
+width: 16%;
+padding: 0;
+background-color: #0f88eb;
+color: white;
+border: 0;
+border-radius: 3px;
+transition: transform 0.2s linear;
+cursor: pointer;
+transform: scale(0, 0);
 }
 
 :local .inputing .submitBtn {
-    transform: scale(1, 1);
+transform: scale(1, 1);
 }

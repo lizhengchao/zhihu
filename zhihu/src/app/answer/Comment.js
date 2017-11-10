@@ -19,10 +19,11 @@ class Comment extends React.Component {
         this.state = {
             count: comments.count,
             sortType: 0, //0:默认排序，1:时间排序
-            open: this.props.open,
             pageNumber: comments.pageNumber,
             totalCount: comments.totalCount,
-            inputing: false
+            inputing: false,
+            showCloseBtn: false,
+            closeBtnLeft: 0
         }
 
     }
@@ -40,7 +41,7 @@ class Comment extends React.Component {
                         headShot: 'https://pic1.zhimg.com/af56f94d6c039369595a1a111b689b08_is.jpg'
 
                     },
-                    content: '你是怎么知道月入5万的人只赚不花？',
+                    content: '你是怎么知道月入5万的人只赚不花？<br/><br/><br/>123',
                     createTime: '1509513858',
                     approveCount: 30,
                     hasReply: true,
@@ -62,6 +63,32 @@ class Comment extends React.Component {
                     createTime: '1506816000',
                     approveCount: 0,
                     hasReply: false
+                },
+                {
+                    id: 3,
+                    answerPerson: {
+                        id: 2,
+                        name: '逗比',
+                        headShot: 'https://pic1.zhimg.com/af56f94d6c039369595a1a111b689b08_is.jpg'
+
+                    },
+                    content: '五万还不够花',
+                    createTime: '1506816000',
+                    approveCount: 0,
+                    hasReply: false
+                },
+                {
+                    id: 4,
+                    answerPerson: {
+                        id: 2,
+                        name: '逗比',
+                        headShot: 'https://pic1.zhimg.com/af56f94d6c039369595a1a111b689b08_is.jpg'
+
+                    },
+                    content: '五万还不够花',
+                    createTime: '1506816000',
+                    approveCount: 0,
+                    hasReply: false
                 }
             ],
             excellentCommentsId: [
@@ -73,16 +100,45 @@ class Comment extends React.Component {
         }
         return comments;
     }
+
+    componentDidMount () {
+        this.scrollEvent = (e) => {
+            let commentDom = this.refs['comment'],
+                commentOffsetTop = commentDom.offsetTop,
+                commentHeight = commentDom.offsetHeight,
+                scrollTop = window.$(window).scrollTop(),
+                clientHeight = document.documentElement.clientHeight;
+
+            if(commentOffsetTop - scrollTop <= clientHeight * 0.5
+                && commentOffsetTop - scrollTop + commentHeight >= clientHeight) {
+                if(!this.state.showCloseBtn) {
+                    this.setState({showCloseBtn: true});
+                }
+            } else {
+                if(this.state.showCloseBtn) {
+                    this.setState({showCloseBtn: false});
+                }
+            }
+        };
+        window.addEventListener('scroll', this.scrollEvent);
+
+        var commentDom = this.refs['comment'];
+        this.setState({closeBtnLeft: commentDom.offsetLeft + commentDom.offsetWidth - 100});
+    }
+
+    componentWillUnmount () {
+        window.removeEventListener('scroll', this.scrollEvent);
+    }
     
     componentWillReceiveProps (newProps) {
-        this.setState({open: newProps.open});
     }
 
     render () {
         console.info('render comment');
 
         return (
-            <div className={style.comment + ' ' + (this.state.open ? '' : 'disable')}>
+            <div className={style.comment} ref="comment">
+                {this.state.showCloseBtn ? (<div className={style.closeBtn} style={{left: this.state.closeBtnLeft + 'px'}} onClick={this.props.closeBtnTap}>收起评论</div>) : ''}
                 <div className={style.top}>
                     <div className={style.commentCount}>{this.state.count}条评论</div>
                     <div className={style.sortType}>{this.state.sortType === 0 ? '按时间排序' : '按默认排序'}</div>
@@ -181,7 +237,7 @@ class Comment extends React.Component {
 
 Comment.propTypes = {
     answerId: PropTypes.number,
-    open: PropTypes.bool
+    closeBtnTap: PropTypes.func
 };
 
 export default Comment;

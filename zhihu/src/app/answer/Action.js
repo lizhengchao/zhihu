@@ -11,11 +11,9 @@ class Action extends React.Component {
     constructor (props) {
         super(props);
         
-        this.commentClick = this.commentClick.bind(this);
-        
         this.state = {
             actionWidth: '100%',
-            commentOpen: false
+            commentOpen: props.commentOpen
         }
     }
 
@@ -27,6 +25,8 @@ class Action extends React.Component {
         } else {
             this.setState({actionWidth: '100%'});
         }
+        
+        this.setState({commentOpen: newProps.commentOpen})
     }
 
     render () {
@@ -34,7 +34,7 @@ class Action extends React.Component {
             <div className={cs({action: true, 'fixed-bottom': this.props.fixedBottom})} style={{width: this.state.actionWidth}} ref="action">
                 <div className="approve"><div className="triangle-up"></div>{this.props.approveCount}</div>
                 <div className="disapprove"><div className="triangle-down"></div></div>
-                <div className="comment" onClick={this.commentClick}>{this.state.commentOpen ? '收起评论' : this.props.commentCount+'人评论'}</div>
+                <div className="comment" onClick={this.props.commentClick}>{this.state.commentOpen ? '收起评论' : this.props.commentCount+'人评论'}</div>
                 <div className="share">分享</div>
                 <div className="collect">收藏</div>
                 <div className="thank">感谢</div>
@@ -42,12 +42,6 @@ class Action extends React.Component {
                 <div className={cs({close: true, disable: !this.props.showClose})} onClick={this.props.closeClick}>收起<img src={require('resource/img/up.jpg')}/></div>
             </div>
         );
-    }
-    
-    commentClick () {
-        let newCommentOpen = !this.state.commentOpen;
-        this.setState({commentOpen: newCommentOpen})
-        this.props.commentClick(newCommentOpen);
     }
 }
 
@@ -57,6 +51,7 @@ Action.propTypes = {
     showClose: PropTypes.bool,
     closeClick: PropTypes.func,
     fixedBottom: PropTypes.bool,
+    commentOpen: PropTypes.bool,
     commentClick: PropTypes.func
 };
 
