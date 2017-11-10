@@ -1,7 +1,7 @@
 /**
  * Created by lzc on 2017/10/27.
  */
-import React, {Component} from 'react';
+import React from 'react';
 import Home from 'app/home/Home';
 import Sign from 'app/user/sign/Sign';
 import {Redirect} from 'react-router';

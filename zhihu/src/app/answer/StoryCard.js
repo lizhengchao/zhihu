@@ -61,10 +61,10 @@ class StoryCard extends React.Component {
         return (
             <div className="card story-card">
                 <div ref="storyCard">
-                    <div className="gray topic">{this.state.from}<img className="fork" src={require('resource/img/fork.jpg')}/></div>
+                    <div className="gray topic">{this.state.from}<img className="fork" src={require('resource/img/fork.jpg')} alt=""/></div>
                     <div className="title">{this.state.title}</div>
                     <div className="user">
-                        <img src={this.state.headshot}/>
+                        <img src={this.state.headshot} alt=""/>
                         <span className="user-name">{this.state.name}</span>
                         <span className="user-word">{this.state.word}</span>
                     </div>

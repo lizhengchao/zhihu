@@ -29,12 +29,12 @@ class Signin extends Component {
                 return (
                     <div className="sign-form qrcode-signin">
                         <div className="qrcode-container">
-                            <img className="qrcode" src={require('resource/img/qrcode.png')}/>
+                            <img className="qrcode" src={require('resource/img/qrcode.png')} alt=""/>
                             <p>打开最新 <a href="https://www.zhihu.com/app/" target="_blank">知乎app</a>
                                 <br/>在[更多]页面右上角打开扫一扫
                             </p>
                             <div className="signin-intro-container">
-                                <img className="signin-intro" src={require('resource/img/signin-intro.jpg')}/>
+                                <img className="signin-intro" src={require('resource/img/signin-intro.jpg')} alt=""/>
                             </div>
                         </div>
                         <div className="use-pd-signin" onClick={this.setSigninMode.bind(this, 1)}>使用密码登录</div>

@@ -104,10 +104,10 @@ class Home extends Component {
                     <div className="left-part">
                         <div className="card top-part">
                             <div className="top-item-container">
-                                <a className="top-item" href=""><img src={require('resource/img/question-logo.jpg')}/>提问</a>
-                                <a className="top-item"><img src={require('resource/img/answer-logo.jpg')}/>回答</a>
-                                <a className="top-item"><img src={require('resource/img/article-logo.jpg')}/>写文章</a>
-                                <a className="top-item"><img src={require('resource/img/idea-logo.jpg')}/>写想法</a>
+                                <a className="top-item" href=""><img src={require('resource/img/question-logo.jpg')} alt=""/>提问</a>
+                                <a className="top-item"><img src={require('resource/img/answer-logo.jpg')} alt=""/>回答</a>
+                                <a className="top-item"><img src={require('resource/img/article-logo.jpg')} alt=""/>写文章</a>
+                                <a className="top-item"><img src={require('resource/img/idea-logo.jpg')} alt=""/>写想法</a>
                             </div>
                             <div className="gray">草稿</div>
                         </div>
