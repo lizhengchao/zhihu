@@ -10,6 +10,8 @@ class Comment extends React.Component {
     constructor (props) {
         super(props);
 
+        this.buildPage = this.buildPage.bind(this);
+        
         this.answerId = props.answerId;
         let comments = this.getCommentsByAnswerId(this.answerId);
         this.comments = comments;
@@ -17,7 +19,10 @@ class Comment extends React.Component {
         this.state = {
             count: comments.count,
             sortType: 0, //0:默认排序，1:时间排序
-            open: this.props.open
+            open: this.props.open,
+            pageNumber: comments.pageNumber,
+            totalCount: comments.totalCount,
+            inputing: false
         }
 
     }
@@ -61,7 +66,10 @@ class Comment extends React.Component {
             ],
             excellentCommentsId: [
                 1
-            ]
+            ],
+            pageSize: 20,
+            pageNumber:0,
+            totalCount: 5
         }
         return comments;
     }
@@ -81,6 +89,14 @@ class Comment extends React.Component {
                 </div>
                 <div className={style.comments}>
                     {this.buildComments(this.comments)}
+                </div>
+                <div className={style.page}>
+                    {this.buildPage()}
+                </div>
+                <div className={style.commentInputContainer + ' ' + (this.state.inputing ? style.inputing : '')}>
+                    <input className={style.commentInput} placeholder="写下你的评论..." onFocus={()=>{this.setState({inputing: true})}}
+                           onBlur={()=>{this.setState({inputing: false})}}/>
+                    <button className={style.submitBtn}>评论</button>
                 </div>
             </div>
         );
@@ -151,6 +167,15 @@ class Comment extends React.Component {
         }
 
         return commentDoms;
+    }
+    
+    buildPage () {
+        var pages = [];
+        for(let i=0; i<this.state.totalCount; i++) {
+            pages.push(<div key={i} className={style.pageItem+ ' ' + (this.state.pageNumber === i ? style.currPage: '')}>{i}</div>)
+        }
+        pages.push(<div key={this.state.totalCount} className={style.pageItem}>下一页</div>);
+        return pages;
     }
 }
 

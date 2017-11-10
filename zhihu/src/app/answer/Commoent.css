@@ -95,3 +95,64 @@
 :local .actionItem span {
     margin-right: 10px;
 }
+
+:local .page {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0px;
+}
+
+:local .pageItem {
+    margin: 0 10px;
+    cursor: pointer;
+}
+:local .pageItem:hover {
+    color: gray
+}
+
+:local .pageItem.currPage {
+    color: #8590a6
+}
+
+:local .commentInputContainer {
+    margin-top: 10px;
+    height: 35px;
+    position: relative;
+}
+
+:local .commentInput {
+    background-color: #f7f8fa;
+    padding: 9px 2.5%;
+    height: 15px;
+    width: 95%;
+    border: 1px solid #e7eaf1;
+    border-radius: 3px;
+    color: #8590a6;
+    z-index: 1;
+    transition: all 0.2s linear;
+}
+
+:local .inputing .commentInput {
+    width: 75%;
+    background-color: white;
+}
+
+:local .submitBtn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 35px;
+    width: 16%;
+    padding: 0;
+    background-color: #0f88eb;
+    color: white;
+    border: 0;
+    border-radius: 3px;
+    transition: transform 0.2s linear;
+    cursor: pointer;
+    transform: scale(0, 0);
+}
+
+:local .inputing .submitBtn {
+    transform: scale(1, 1);
+}
