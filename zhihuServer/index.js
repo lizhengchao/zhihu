@@ -15,7 +15,11 @@ global.getPath = (absolutePath)=> {
 
 let PersonRouter = require('./controller/PersonController'),
     VerificationCodeRouter = require('./controller/VerificationCodeController'),
-    PhoneVerifyCodeRouter = require('./controller/PhoneVerifyCodeController');
+    PhoneVerifyCodeRouter = require('./controller/PhoneVerifyCodeController'),
+    QuestionRouter = require('./controller/QuestionController'),
+    AnswerRouter = require('./controller/AnswerController'),
+    VoteRelationRouter = require('./controller/VoteRelationContoller'),
+    CommentRouter = require('./controller/CommentController');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -30,5 +34,13 @@ app.use('/person', PersonRouter);
 app.use('/verificationCode', VerificationCodeRouter);
 
 app.use('/phoneVerifyCode', PhoneVerifyCodeRouter);
+
+app.use('/question', QuestionRouter);
+
+app.use('/answer', AnswerRouter);
+
+app.use('/voteRelation', VoteRelationRouter);
+
+app.use('/comment', CommentRouter);
 
 app.listen(3001);

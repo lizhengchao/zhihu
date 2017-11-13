@@ -43,7 +43,7 @@ class PersonDao extends baseDao {
             }
             callback(new ResultData(ErrorCode[0], null, p));
         }).catch((err) => {
-            callback(new ResultData(ErrorCode[10001], err, null));
+            callback(new ResultData(ErrorCode[10001], err.message, null));
         })
     }
 
@@ -61,7 +61,7 @@ class PersonDao extends baseDao {
             }
             callback(new ResultData(ErrorCode[10005],  '不存在手机号为'+phoneNumber+'的用户', null));
         }).catch((err) => {
-            callback(new ResultData(ErrorCode[10001], err, null));
+            callback(new ResultData(ErrorCode[10001], err.message, null));
         })
     }
 
@@ -78,7 +78,7 @@ class PersonDao extends baseDao {
             callback(new ResultData(ErrorCode[0], null, p));
         }).catch((err) => {
             console.error('create person fail, err:' + err);
-            callback(new ResultData(ErrorCode[10001], err, null));
+            callback(new ResultData(ErrorCode[10001], err.message, null));
         })
     }
     
@@ -95,13 +95,13 @@ class PersonDao extends baseDao {
             }
             p.name= person.name;
             p['modify_time'] = new Date();
-            person.save().then(pp => {
+            p.save().then(pp => {
                 callback(new ResultData(ErrorCode[0], null, pp));
             }).catch(err => {
-                callback(new ResultData(ErrorCode[10001], err, null));
+                callback(new ResultData(ErrorCode[10001], err.message, null));
             })
         }).catch(err => {
-            callback(new ResultData(ErrorCode[10001], err, null));
+            callback(new ResultData(ErrorCode[10001], err.message, null));
         })
     }
     
@@ -109,7 +109,7 @@ class PersonDao extends baseDao {
         let personSeq = this.personSeq;
 
         personSeq.findById(id).then(person => {
-            if(p == null) {
+            if(person == null) {
                 callback(new ResultData(ErrorCode[10004], '不存在id为'+id+'的用户', null));
                 return;
             }
@@ -121,10 +121,10 @@ class PersonDao extends baseDao {
             person.save().then(person => {
                 callback(new ResultData(ErrorCode[0], null, person));
             }).catch(err => {
-                callback(new ResultData(ErrorCode[10001], err, null));
+                callback(new ResultData(ErrorCode[10001], err.message, null));
             })
         }).catch(err => {
-            callback(new ResultData(ErrorCode[10001], err, null));
+            callback(new ResultData(ErrorCode[10001], err.message, null));
         })
 
         //真删除，改为假删除

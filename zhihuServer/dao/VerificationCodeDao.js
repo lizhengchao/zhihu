@@ -36,7 +36,7 @@ class VerificationCodeDao extends baseDao {
             }
             callback(new ResultData(ErrorCode[0], null, p));
         }).catch((err) => {
-            callback(new ResultData(ErrorCode[10001], err, null))
+            callback(new ResultData(ErrorCode[10001], err.message, null))
         })
     }
 
@@ -51,8 +51,8 @@ class VerificationCodeDao extends baseDao {
             console.info('created: ' + JSON.stringify(v));
             callback(new ResultData(ErrorCode[0], null, v));
         }).catch((err) => {
-            console.info('create fail, err:' + err);
-            callback(new ResultData(ErrorCode[10001], err, null))
+            console.info('create fail, err:' + err.message);
+            callback(new ResultData(ErrorCode[10001], err.message, null))
         })
     }
 
@@ -67,10 +67,10 @@ class VerificationCodeDao extends baseDao {
             verificationCode.destroy().then(() => {
                 callback(new ResultData(ErrorCode[0], null, null));
             }).catch(err => {
-                callback(new ResultData(ErrorCode[10001], err, null))
+                callback(new ResultData(ErrorCode[10001], err.message, null))
             })
         }).catch(err => {
-            callback(new ResultData(ErrorCode[10001], err, null))
+            callback(new ResultData(ErrorCode[10001], err.message, null))
         })
     }
 }
