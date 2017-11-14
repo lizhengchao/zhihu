@@ -3,7 +3,7 @@
  */
 const baseDao = require('./baseDao'),
     Sequelize = require('sequelize'),
-    {ErrorCode, ResultData} = require(getPath('extra/ResponseData'));
+    {ErrorCode, ResultData, ErrorData} = require(getPath('extra/ResponseData'));
 
 class VoteRelationDao extends baseDao {
     constructor () {
@@ -28,17 +28,18 @@ class VoteRelationDao extends baseDao {
         this.voteRelationsequelize = VoteRelationSequelize;
     }
 
-    getVoteCountByTypeAndAnswerCommentId (type, answerCommentId, callback) {
-        this.voteRelationsequelize.count({
-            where: {
-                type: type,
-                'answer_comment_id': answerCommentId
-            }
-        }).then((count)=>{
-            callback(new ResultData(ErrorCode[0], null, count));
-        }).catch((err) => {
-            callback(new ResultData(ErrorCode[10001], err.message, null))
-        })
+    async getVoteCountByTypeAndAnswerCommentId (type, answerCommentId) {
+        try {
+            var count = await this.voteRelationsequelize.count({
+                where: {
+                    type: type,
+                    'answer_comment_id': answerCommentId
+                }
+            });
+        } catch (e) {
+            throw new ErrorData(ErrorCode[10001], e.message)
+        }
+        return count;
     }
 
     addVoteRelation (voteRelation, callback) {

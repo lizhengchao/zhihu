@@ -3,7 +3,7 @@
  */
 const baseDao = require('./baseDao'),
     Sequelize = require('sequelize'),
-    {ErrorCode, ResultData} = require(getPath('extra/ResponseData'));
+    {ErrorCode, ResultData, ErrorData} = require(getPath('extra/ResponseData'));
 
 class AnswerDao extends baseDao {
     constructor () {
@@ -46,6 +46,34 @@ class AnswerDao extends baseDao {
         }).catch((err) => {
             callback(new ResultData(ErrorCode[10001], err.message, null));
         })
+    }
+
+    // getAnswerListByPersonId (id, callback) {
+    //     let answerSeq = this.answerSeq;
+    //
+    //     answerSeq.findAll({
+    //         where: {
+    //             'answer_person_id': id
+    //         }
+    //     }).then(answers => {
+    //         callback(new ResultData(ErrorCode[0], null, answers));
+    //     }).catch((err) => {
+    //         callback(new ResultData(ErrorCode[10001], err.message, null));
+    //     })
+    // }
+
+    //使用async实现
+    async getAnswerListByPersonId (id) {
+        try {
+            var answers = await this.answerSeq.findAll({
+                where: {
+                    'answer_person_id': id
+                }
+            })
+        } catch (err) {
+            throw new ErrorData(ErrorCode[10001], err.message);
+        }
+        return answers;
     }
 
     addAnswer (answer, callback) {

@@ -3,7 +3,7 @@
  */
 const baseDao = require('./baseDao'),
     Sequelize = require('sequelize'),
-    {ErrorCode, ResultData} = require(getPath('extra/ResponseData'));
+    {ErrorCode, ResultData, ErrorData} = require(getPath('extra/ResponseData'));
 
 class CommentDao extends baseDao {
     constructor () {
@@ -63,6 +63,20 @@ class CommentDao extends baseDao {
         }).catch((err) => {
             callback(new ResultData(ErrorCode[10001], err.message, null));
         })
+    }
+
+    async getCommentCountByTypeAndId (type, id) {
+        try {
+            var count = await this.commentSeq.count({
+                where: {
+                    type: type,
+                    'question_comment_answer_id': id
+                }
+            });
+        } catch (err) {
+            throw new ErrorData(ErrorCode[10001], err.message);
+        }
+        return count;
     }
 
     addComment (comment, callback) {

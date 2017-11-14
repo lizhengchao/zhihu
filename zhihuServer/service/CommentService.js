@@ -17,6 +17,10 @@ class CommentService {
         return this.commentDao.getCommentsByTypeAndId(type, id, {pageSize, pageIndex}, callback);
     }
 
+    async getCommentCountByAnswerId (id) {
+        return this.commentDao.getCommentCountByTypeAndId(2, id);
+    }
+
     addComment (comment, callback) {
         this.commentDao.addComment(comment, callback);
     }

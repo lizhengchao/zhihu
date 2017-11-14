@@ -3,7 +3,7 @@
  */
 const baseDao = require('./baseDao'),
     Sequelize = require('sequelize'),
-    {ErrorCode, ResultData} = require(getPath('extra/ResponseData'));
+    {ErrorCode, ResultData, ErrorData} = require(getPath('extra/ResponseData'));
 
 class QuestionDao extends baseDao {
     constructor () {
@@ -30,22 +30,20 @@ class QuestionDao extends baseDao {
         this.questionSeq = QuestionSeq;
     }
 
-    getQuestionById (id, callback) {
-        let questionSeq = this.questionSeq;
-
-        questionSeq.findById(id).then((q) => {
-            if(q == null) {
-                callback(new ResultData(ErrorCode[10004], '不存在id为'+id+'的问题', null));
-                return;
-            }
-            if (q['is_delete'] == 1) {
-                callback(new ResultData(ErrorCode[10005], '不存在id为'+id+'的问题', null));
-                return;
-            }
-            callback(new ResultData(ErrorCode[0], null, q));
-        }).catch((err) => {
-            callback(new ResultData(ErrorCode[10001], err.message, null));
-        })
+    async getQuestionById (id) {
+        try {
+            var question = await this.questionSeq.findById(id);
+        } catch (err) {
+            throw new ErrorData(ErrorCode[10001], err.message)
+        }
+        
+        if(question == null) {
+            throw new ErrorData(ErrorCode[10004], '不存在id为'+id+'的问题');
+        }
+        if (question['is_delete'] == 1) {
+            throw new ErrorData(ErrorCode[10005], '不存在id为'+id+'的问题');
+        }
+        return question;
     }
 
     addQuestion (question, callback) {

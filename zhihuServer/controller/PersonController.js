@@ -13,13 +13,14 @@ router.use('/', (req, res, next)=>{
     next();
 });
 
-router.get('/getUserInfo', (req, res)=> {
-    let id = req.query.id,
-        callback = resultData => {
-            res.send(new ResponseData(resultData).buildStr());
-        }
-    personService.getPersonInfoById(id, callback);
-
+router.get('/getUserInfo', async (req, res)=> {
+    let id = req.query.id;
+    try {
+        var resultData = await personService.getPersonInfoById(id);
+    } catch (errResultData) {
+        res.send(new ResponseData(errResultData).buildStr())
+    }
+    res.send(new ResponseData(ErrorCode[0], null, resultData).buildStr());
 });
 
 router.post('/register', (req, res)=> {

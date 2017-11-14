@@ -9,12 +9,12 @@ class VoteRelationService {
         this.voteRelationDao = new VoteRelationDao();
     }
 
-    getVoteCountByAnswerId (answerId, callback) {
-        return this.voteRelationDao.getVoteCountByTypeAndAnswerCommentId(0, answerId, callback);
+    getVoteCountByAnswerId (answerId) {
+        return this.voteRelationDao.getVoteCountByTypeAndAnswerCommentId(0, answerId);
     }
     
-    getVoteCountByCommendId (commentId, callback) {
-        return this.voteRelationDao.getVoteCountByTypeAndAnswerCommentId(1, commentId, callback);
+    getVoteCountByCommendId (commentId) {
+        return this.voteRelationDao.getVoteCountByTypeAndAnswerCommentId(1, commentId);
     }
 
     addVoteRelation (voteRelation, callback) {

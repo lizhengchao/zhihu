@@ -3,7 +3,7 @@
  */
 const baseDao = require('./baseDao'),
     Sequelize = require('sequelize'),
-    {ErrorCode, ResultData} = require(getPath('extra/ResponseData'));
+    {ErrorCode, ResultData, ErrorData} = require(getPath('extra/ResponseData'));
 
 class PersonDao extends baseDao {
     constructor () {
@@ -29,22 +29,19 @@ class PersonDao extends baseDao {
         this.personSeq = PersonSeq;
     }
     
-    getPersonInfoById (id, callback) {
-        let personSeq = this.personSeq;
-
-        personSeq.findById(id).then((p) => {
-            if(p == null) {
-                callback(new ResultData(ErrorCode[10004], '不存在id为'+id+'的用户', null));
-                return;
-            }
-            if(p['is_delete'] === '1') {
-                callback(new ResultData(ErrorCode[10005], '不存在id为'+id+'的用户'));
-                return;
-            }
-            callback(new ResultData(ErrorCode[0], null, p));
-        }).catch((err) => {
-            callback(new ResultData(ErrorCode[10001], err.message, null));
-        })
+    async getPersonInfoById (id) {
+        try {
+            var p = await this.personSeq.findById(id);
+        } catch (err) {
+            throw new ErrorData(ErrorCode[10001], err.message);
+        }
+        if(p == null) {
+            throw new ErrorData(ErrorCode[10004], '不存在id为'+id+'的用户');
+        }
+        if(p['is_delete'] === '1') {
+            throw new ErrorData(ErrorCode[10005], '不存在id为'+id+'的用户');
+        }
+        return p;
     }
 
     getPersonByPhoneNumber (phoneNumber, callback) {

@@ -19,11 +19,15 @@ let PersonRouter = require('./controller/PersonController'),
     QuestionRouter = require('./controller/QuestionController'),
     AnswerRouter = require('./controller/AnswerController'),
     VoteRelationRouter = require('./controller/VoteRelationContoller'),
-    CommentRouter = require('./controller/CommentController');
+    CommentRouter = require('./controller/CommentController'),
+    HomeRouter = require('./controller/HomeController');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 // app.use(multer()); // for parsing multipart/form-data
+
+//静态资源
+app.use('/static', express.static('static'));
 
 app.get('/', (req, res)=> {
     res.send('hello zhihu');
@@ -42,5 +46,7 @@ app.use('/answer', AnswerRouter);
 app.use('/voteRelation', VoteRelationRouter);
 
 app.use('/comment', CommentRouter);
+
+app.use('/home', HomeRouter);
 
 app.listen(3001);

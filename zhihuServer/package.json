@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "supervisor -harmony index",
-    "debug": "node --debug index"
+    "debug": "node --debug --harmony-async-await index"
   },
   "author": "",
   "license": "ISC",

@@ -13,6 +13,10 @@ class AnswerService {
         return this.answerDao.getAnswerById(id, callback);
     }
 
+    getAnswerListByPersonId (id) {
+        return this.answerDao.getAnswerListByPersonId(id);
+    }
+
     addAnswer (answer, callback) {
         this.answerDao.addAnswer(answer, callback);
     }

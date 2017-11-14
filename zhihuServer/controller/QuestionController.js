@@ -16,13 +16,14 @@ router.use('/', (req, res, next)=>{
 })
 
 //获取问题信息
-router.get('/getQuestionInfo', (req, res)=> {
+router.get('/getQuestionInfo',async (req, res)=> {
     let {id} = req.query;
-    let callback = (resultData) => {
-        res.send(new ResponseData(resultData).buildStr());
+    try {
+        var question = await questionService.getQuestionById(id);
+    } catch (errResultData) {
+        res.send(new ResponseData(errResultData).buildStr());
     }
-    questionService.getQuestionById(id, callback);
-
+    res.send(new ResponseData(ErrorCode[0], null, question).buildStr());
 });
 
 //新增问题
