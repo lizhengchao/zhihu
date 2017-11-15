@@ -48,35 +48,39 @@ class HomeService {
             return answerList;
         }
         for (let answer of answerList) {
-            let dataItem = {
-                id: answer['id'],
-                answerImg: getImgUrlFromDomText(answer['content']),
-                answerText: answer['content']
-            };
-            let answerId = answer['id'],
-                questionId = answer['question_id'],
-                personId = answer['answer_person_id'];
-            var [question, answerPerson, voteCount, commentCount, topics] = await Promise.all([this.questionService.getQuestionById(questionId),
-                this.personService.getPersonInfoById(personId), this.voteRelationService.getVoteCountByAnswerId(answerId),
-                this.commentService.getCommentCountByAnswerId(answerId), this.topicService.getTopicsByQuestionId(questionId)]);
-            dataItem.questionId = questionId;
-            dataItem.title = question.content;
-            dataItem.answerUser = {
-                id: personId,
-                name: answerPerson['name'],
-                word: answerPerson['signword'],
-                headshot: buildImgUrl(answerPerson['headshot'])
+            try {
+                let dataItem = {
+                    id: answer['id'],
+                    answerImg: getImgUrlFromDomText(answer['content']),
+                    answerText: answer['content']
+                };
+                let answerId = answer['id'],
+                    questionId = answer['question_id'],
+                    personId = answer['answer_person_id'];
+                var [question, answerPerson, voteCount, commentCount, topics] = await Promise.all([this.questionService.getQuestionById(questionId),
+                    this.personService.getPersonInfoById(personId), this.voteRelationService.getVoteCountByAnswerId(answerId),
+                    this.commentService.getCommentCountByAnswerId(answerId), this.topicService.getTopicsByQuestionId(questionId)]);
+                dataItem.questionId = questionId;
+                dataItem.title = question.content;
+                dataItem.answerUser = {
+                    id: personId,
+                    name: answerPerson['name'],
+                    word: answerPerson['signword'],
+                    headshot: buildImgUrl(answerPerson['headshot'])
+                }
+                dataItem.approveCount = voteCount;
+                dataItem.commentCount = commentCount;
+                if(topics.length > 0) {
+                    dataItem.topicId = topics[0].id;
+                    dataItem.topicContent = topics[0].name;
+                }else {
+                    dataItem.topicId = null;
+                    dataItem.topicContent = '';
+                }
+                dataList.push(dataItem);    
+            } catch (err) {
+                console.warn('on getHomeList, push answerid:' + answer.id + ' fail, errmsg:' + (err.msg || err.message));
             }
-            dataItem.approveCount = voteCount;
-            dataItem.commentCount = commentCount;
-            if(topics.length > 0) {
-                dataItem.topicId = topics[0].id;
-                dataItem.topicContent = topics[0].name;
-            }else {
-                dataItem.topicId = null;
-                dataItem.topicContent = '';
-            }
-            dataList.push(dataItem);
         }
         return dataList;
     }

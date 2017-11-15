@@ -13,8 +13,8 @@ class PersonService {
         this.verificationCodeService = new VerificationCodeService();
     }
     
-    getPersonInfoById (id, callback) {
-        return this.personDao.getPersonInfoById(id, callback);
+    getPersonInfoById (id) {
+        return this.personDao.getPersonInfoById(id);
     }
 
     getPersonInfoByPhoneNumber(phoneNumber, callback) {

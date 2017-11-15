@@ -15,34 +15,38 @@ router.use('/', (req, res, next)=>{
     next();
 })
 
-//获取回答信息
-router.get('/getCommentInfo', (req, res)=> {
+//获取评论信息
+router.get('/getCommentInfo', async (req, res)=> {
     let {id} = req.query;
-    let callback = (resultData) => {
-        res.send(new ResponseData(resultData).buildStr());
-    };
-    commentService.getCommentById(id, callback);
+    try {
+        var resultData = await commentService.getCommentById(id);
+    } catch (errResultData) {
+        res.send(new ResponseData(errResultData).buildStr())
+    }
+    res.send(new ResponseData(ErrorCode[0], null, resultData).buildStr());
 });
 
-router.get('/getCommentsByAnswerId', (req, res) => {
-    let {id, pageIndex, pageSize} =req.query,
-        callback = (resultData) => {
-            res.send(new ResponseData(resultData).buildStr());
-        };
-    commentService.getCommentsByTypeAndId(2, id, {pageIndex, pageSize}, callback);
+router.get('/getCommentsDataByAnswerId', async(req, res) => {
+    let {id, pageIndex, pageSize} = req.query;
+    try {
+        var resultData = await commentService.getCommentsDataByAnswerId(id, {pageIndex, pageSize});
+    } catch (errResultData) {
+        res.send(new ResponseData(errResultData).buildStr())
+    }
+    res.send(new ResponseData(ErrorCode[0], null, resultData).buildStr());
 })
 
-//新增回答
+//新增评论
 router.post('/addComment', (req, res) => {
-    var {type, questionCommentAnswerId, content, personId} = req.body,
+    var {type, questionAnswerId, commentId, content, personId} = req.body,
         callback = (resultData) => {
             res.send(new ResponseData(resultData).buildStr());
         };
 
-    commentService.addComment({type, questionCommentAnswerId, content, personId}, callback);
+    commentService.addComment({type, questionAnswerId, commentId, content, personId}, callback);
 });
 
-//更新回答
+//更新评论
 router.post('/updateComment', (req, res) => {
     let {id, content} = req.body,
         callback = (resultData) => {
@@ -51,7 +55,7 @@ router.post('/updateComment', (req, res) => {
     commentService.updateComment({id, content}, callback);
 });
 
-//删除回答
+//删除评论
 router.get('/deleteComment', (req, res) => {
     let {id} = req.query,
         callback = (resultData) => {

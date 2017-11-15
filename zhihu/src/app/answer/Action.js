@@ -34,7 +34,7 @@ class Action extends React.Component {
             <div className={cs({action: true, 'fixed-bottom': this.props.fixedBottom})} style={{width: this.state.actionWidth}} ref="action">
                 <div className="approve"><div className="triangle-up"></div>{this.props.approveCount}</div>
                 <div className="disapprove"><div className="triangle-down"></div></div>
-                <div className="comment" onClick={this.props.commentClick}>{this.state.commentOpen ? '收起评论' : this.props.commentCount+'人评论'}</div>
+                <div className="comment" onClick={this.props.commentCount !== 0 ? this.props.commentClick : ()=>{}}>{this.state.commentOpen ? '收起评论' : this.props.commentCount+'人评论'}</div>
                 <div className="share">分享</div>
                 <div className="collect">收藏</div>
                 <div className="thank">感谢</div>

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import cs from 'classnames';
 import style from './Comment.css';
 import CommentItem from './CommentItem';
+import {serverUrl} from 'extra/config';
 
 class Comment extends React.Component {
     constructor (props) {
@@ -14,14 +15,13 @@ class Comment extends React.Component {
         this.buildPage = this.buildPage.bind(this);
         
         this.answerId = props.answerId;
-        let comments = this.getCommentsByAnswerId(this.answerId);
-        this.comments = comments;
+        this.getCommentsByAnswerId(this.answerId, (comments) => {
+            this.setState({comments: comments})
+        });
 
         this.state = {
-            count: comments.count,
+            comments: {comment: []},
             sortType: 0, //0:默认排序，1:时间排序
-            pageNumber: comments.pageNumber,
-            totalCount: comments.totalCount,
             inputing: false,
             showCloseBtn: false,
             closeBtnLeft: 0
@@ -29,7 +29,24 @@ class Comment extends React.Component {
 
     }
 
-    getCommentsByAnswerId (answerId) {
+    getCommentsByAnswerId (answerId, callback) {
+        window.$.get({
+            url: serverUrl + '/comment/getCommentsDataByAnswerId',
+            data: {
+                id: answerId
+            },
+            success (res) {
+                res = JSON.parse(res);
+                if(res.errcode !== 0) {
+                    console.error('获取评论信息失败，错误信息：' + res.msg);
+                } else {
+                    callback(res.data);
+                }
+            },
+            error (xhr, textStatus, errorThrow) {
+                console.error('获取评论信息失败， 服务异常, 错误信息：' + xhr.responseText);
+            }
+        })
         //TODO
         var comments = {
             count: 74,
@@ -135,17 +152,15 @@ class Comment extends React.Component {
     }
 
     render () {
-        console.info('render comment');
-
         return (
             <div className={style.comment} ref="comment">
                 {this.state.showCloseBtn ? (<div className={style.closeBtn} style={{left: this.state.closeBtnLeft + 'px'}} onClick={this.props.closeBtnTap}>收起评论</div>) : ''}
                 <div className={style.top}>
-                    <div className={style.commentCount}>{this.state.count}条评论</div>
+                    <div className={style.commentCount}>{this.state.comments.count}条评论</div>
                     <div className={style.sortType}>{this.state.sortType === 0 ? '按时间排序' : '按默认排序'}</div>
                 </div>
                 <div className={style.comments}>
-                    {this.buildComments(this.comments)}
+                    {this.buildComments(this.state.comments)}
                 </div>
                 <div className={style.page}>
                     {this.buildPage()}
@@ -173,10 +188,10 @@ class Comment extends React.Component {
     
     buildPage () {
         var pages = [];
-        for(let i=0; i<this.state.totalCount; i++) {
-            pages.push(<div key={i} className={style.pageItem+ ' ' + (this.state.pageNumber === i ? style.currPage: '')}>{i}</div>)
+        for(let i=0; i<this.state.comments.totalCount; i++) {
+            pages.push(<div key={i} className={style.pageItem+ ' ' + (this.state.comments.pageNumber === i ? style.currPage: '')}>{i}</div>)
         }
-        pages.push(<div key={this.state.totalCount} className={style.pageItem}>下一页</div>);
+        pages.push(<div key={this.state.comments.totalCount} className={style.pageItem}>下一页</div>);
         return pages;
     }
 }

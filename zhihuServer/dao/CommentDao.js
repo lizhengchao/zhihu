@@ -16,7 +16,8 @@ class CommentDao extends baseDao {
                     autoIncrement: true
                 },
                 type: Sequelize.INTEGER,
-                'question_comment_answer_id': Sequelize.INTEGER,
+                'question_answer_id': Sequelize.INTEGER,
+                'comment_id': Sequelize.INTEGER,
                 'content': Sequelize.STRING(1023),
                 'person_id': Sequelize.INTEGER,
                 'create_time': Sequelize.DATE,
@@ -30,39 +31,35 @@ class CommentDao extends baseDao {
         this.commentSeq = CommentSeq;
     }
 
-    getCommentById (id, callback) {
-        let commentSeq = this.commentSeq;
-
-        commentSeq.findById(id).then((q) => {
-            if(q == null) {
-                callback(new ResultData(ErrorCode[10004], '不存在id为'+id+'的评论', null));
-                return;
-            }
-            if (q['is_delete'] == 1) {
-                callback(new ResultData(ErrorCode[10005], '不存在id为'+id+'的评论', null));
-                return;
-            }
-            callback(new ResultData(ErrorCode[0], null, q));
-        }).catch((err) => {
-            callback(new ResultData(ErrorCode[10001], err.message, null));
-        })
+    async getCommentById (id) {
+        try {
+            var comment = await this.commentSeq.findById(id);
+        } catch (err) {
+            throw new ErrorData(ErrorCode[10001], err.message);
+        }
+        if(comment == null) {
+            throw new ErrorData(ErrorCode[10004], '不存在id为'+id+'的评论');
+        }
+        if (comment['is_delete'] == 1) {
+            throw new ErrorData(ErrorCode[10005], '不存在id为'+id+'的评论');
+        }
+        return comment;
     }
 
-    getCommentsByTypeAndId (type, id, {pageSize, pageIndex}, callback) {
-        let commetnSeq = this.commentSeq;
-
-        commetnSeq.findAll({
-            where: {
-                type: type,
-                'question_comment_answer_id': id
-            },
-            offset: pageSize * pageIndex,
-            limit: parseInt(pageSize)
-        }).then(comments => {
-            callback(new ResultData(ErrorCode[0], null, comments));
-        }).catch((err) => {
-            callback(new ResultData(ErrorCode[10001], err.message, null));
-        })
+    async getCommentsByTypeAndId (type, id, {pageSize, pageIndex}) {
+        try {
+            var comments = await this.commentSeq.findAll({
+                where: {
+                    type: type,
+                    'question_answer_id': id
+                },
+                offset: pageSize * pageIndex,
+                limit: parseInt(pageSize)
+            });
+        } catch (err) {
+            throw new ErrorData(ErrorCode[10001], err.message);
+        }
+        return comments;
     }
 
     async getCommentCountByTypeAndId (type, id) {
@@ -70,7 +67,7 @@ class CommentDao extends baseDao {
             var count = await this.commentSeq.count({
                 where: {
                     type: type,
-                    'question_comment_answer_id': id
+                    'question_answer_id': id
                 }
             });
         } catch (err) {
@@ -84,7 +81,8 @@ class CommentDao extends baseDao {
 
         commentSeq.create({
             type: comment.type,
-            'question_comment_answer_id': comment.questionCommentAnswerId,
+            'question_answer_id': comment.questionAnswerId,
+            'comment_id': comment.commentId,
             'content': comment.content,
             'person_id': comment.personId,
             'create_time': new Date(),
