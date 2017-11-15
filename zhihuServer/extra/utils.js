@@ -7,6 +7,11 @@ const vaildatUtil = {
     }
 }
 
+const buildImgUrl = (url) => {
+    return 'http://localhost:3001/static/image/' + url;
+}
+
 module.exports = {
-    vaildatUtil: vaildatUtil
+    vaildatUtil,
+    buildImgUrl
 }

@@ -24,12 +24,12 @@ router.get('/getUserInfo', async (req, res)=> {
 });
 
 router.post('/register', (req, res)=> {
-    let {name, password, phoneNumber} = req.body;
+    let {name, password, phoneNumber, signword, headshot} = req.body;
     if(typeof name === 'undefined' || typeof password === 'undefined' || typeof phoneNumber === 'undefined') {
         res.send(new ResponseData(ErrorCode[20001], '添加用户失败，名字、密码、手机号都不能为空').buildStr());
         return;
     }
-    let person = {name, password, phoneNumber},
+    let person = {name, password, phoneNumber, signword, headshot},
         callback = (resultData) => {
             if(resultData.errcode === ErrorCode[0]) {
                 res.send(new ResponseData(ErrorCode[0], null, resultData.data.id).buildStr());
@@ -42,11 +42,11 @@ router.post('/register', (req, res)=> {
 });
 
 router.get('/updateUser', (req, res) => {
-    let {id, name} = req.query;
-    if(typeof id === 'undefined' || typeof name === 'undefined') {
-        res.send(new ResponseData(ErrorCode[20001], 'id或name不能为空').buildStr());
+    let {id, name, signword, headshot} = req.query;
+    if(typeof id === 'undefined') {
+        res.send(new ResponseData(ErrorCode[20001], 'id不能为空').buildStr());
     }
-    let person = {id, name},
+    let person = {id, name, signword, headshot},
         callback = (resultData) => {
             res.send(new ResponseData(resultData).buildStr());
         };

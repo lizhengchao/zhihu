@@ -2,6 +2,7 @@
  * Created by lzc on 2017/11/14.
  */
 var {ErrorCode, ResultData, ErrorData} = require(getPath('extra/ResponseData'));
+var {buildImgUrl} = require(getPath('extra/utils'));
 
 class HomeService {
     constructor () {
@@ -46,7 +47,7 @@ class HomeService {
                 id: personId,
                 name: answerPerson['name'],
                 word: answerPerson['signword'],
-                headshot: answerPerson['headshot']
+                headshot: buildImgUrl(answerPerson['headshot'])
             }
             dataItem.approveCount = voteCount;
             dataItem.commentCount = commentCount;
@@ -56,8 +57,6 @@ class HomeService {
         }
         return dataList;
     }
-
-
 }
 
 module.exports = HomeService;

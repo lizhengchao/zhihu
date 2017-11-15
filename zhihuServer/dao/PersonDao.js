@@ -18,6 +18,8 @@ class PersonDao extends baseDao {
                 name: Sequelize.STRING,
                 password: Sequelize.STRING,
                 'phone_number': Sequelize.STRING(31),
+                signword: Sequelize.STRING,
+                headshot: Sequelize.STRING,
                 'create_time': Sequelize.DATE,
                 'modify_time': Sequelize.DATE,
                 'is_delete': Sequelize.STRING(1)
@@ -69,6 +71,8 @@ class PersonDao extends baseDao {
             name: person.name,
             password: person.password,
             'phone_number': person.phoneNumber,
+            signword: person.signword,
+            headshot: person.headshot,
             'create_time': new Date(),
             'modify_time': new Date()
         }).then((p) => {
@@ -90,7 +94,9 @@ class PersonDao extends baseDao {
             if(person['is_delete'] === '1') {
                 callback(new ResultData(ErrorCode[10005],  '不存在id为'+person.id+'的用户', null));
             }
-            p.name= person.name;
+            if(person.name) p.name= person.name;
+            if(person.signword) p.signword = person.signword;
+            if(person.headshot) p.headshot = person.headshot;
             p['modify_time'] = new Date();
             p.save().then(pp => {
                 callback(new ResultData(ErrorCode[0], null, pp));
