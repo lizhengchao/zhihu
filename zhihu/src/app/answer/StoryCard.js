@@ -17,7 +17,7 @@ class StoryCard extends React.Component {
         var matchDom = /<[\s\S]*?>/g;
         
         this.state = {
-            from: props.data.from,
+            from: props.data.topicContent,
             title: props.data.title,
             headshot: props.data.answerUser.headshot,
             name: props.data.answerUser.name,

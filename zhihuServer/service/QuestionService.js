@@ -9,8 +9,8 @@ class QuestionService {
         this.questionDao = new QuestionDao();
     }
 
-    getQuestionById (id, callback) {
-        return this.questionDao.getQuestionById(id, callback);
+    getQuestionById (id) {
+        return this.questionDao.getQuestionById(id);
     }
 
     addQuestion (question, callback) {

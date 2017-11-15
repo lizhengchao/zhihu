@@ -13,6 +13,11 @@ class ResponseData {
             this.msg = errcode.msg;
             this.data = null;
             return;
+        } else if (errcode.constructor === ReferenceError) {
+            this.errcode = ErrorCode[10001];
+            this.msg = errcode.message;
+            this.data = null;
+            return;
         } else if (arguments.length == 1) {
             //其他情况只有一个参数则识别为发生错误错误类型
             this.errcode = ErrorCode[10001];
