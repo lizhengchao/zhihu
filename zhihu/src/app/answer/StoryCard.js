@@ -12,6 +12,8 @@ class StoryCard extends React.Component {
     constructor (props) {
         super(props);
 
+        this.contentOnClick = this.contentOnClick.bind(this);
+
         var matchDom = /<[\s\S]*?>/g;
         
         this.state = {
@@ -68,7 +70,7 @@ class StoryCard extends React.Component {
                         <span className="user-name">{this.state.name}</span>
                         <span className="user-word">{this.state.word}</span>
                     </div>
-                    <div className="content" onClick={()=>{this.setState({detail: true})}}>
+                    <div className="content" onClick={this.contentOnClick}>
                         <div className={cs({'no-dom-text': true, disable: this.state.detail})}>
                             <div className={cs({'content-img': true, disable: this.state.answerImg == ''})} style={{backgroundImage: 'url(' + this.state.answerImg + ')'}}></div>
                             <div className="text">
@@ -85,6 +87,12 @@ class StoryCard extends React.Component {
                 {this.state.commentOpen ? <Comment answerId={this.props.data.id} closeBtnTap={()=>{this.setState({commentOpen: false})}}/> : ''}
             </div>
         );
+    }
+
+    contentOnClick () {
+        if(this.state.answerTextNoDom.length > 80) {
+            this.setState({detail: true});
+        }
     }
 }
 

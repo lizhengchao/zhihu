@@ -47,12 +47,12 @@
 
 .story-card .content {
     margin-top: 20px;
-    cursor: pointer;
 }
 
 .content .no-dom-text {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .story-card .content .content-img {

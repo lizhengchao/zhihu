@@ -9,6 +9,7 @@ import {Route, Link} from 'react-router-dom';
 import cs from 'classnames';
 import Signin from './Signin';
 import Signup from './Signup';
+import {setUserId} from 'extra/utils';
 
 class Sign extends Component {
     constructor (props, context) {
@@ -54,14 +55,8 @@ class Sign extends Component {
     }
 
     addUserInfoAndToHome (userId) {
-        var setCookie = function(c_name,value,expiredays) {
-            var exdate=new Date()
-            exdate.setDate(exdate.getDate()+expiredays)
-            document.cookie=c_name+ "=" + encodeURI(value) +
-                ((expiredays==null) ? "" : ";expires="+exdate.toGMTString()) + "; path=/"
-        };
-        setCookie('userId', userId);
-
+        
+        setUserId(userId);
         this.context.router.history.push('/home');
     }
 
