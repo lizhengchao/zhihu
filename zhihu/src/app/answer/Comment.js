@@ -17,7 +17,7 @@ class Comment extends React.Component {
         this.getComments = this.getComments.bind(this);
         
         this.answerId = props.answerId;
-        this.pageSize = 1;
+        this.pageSize = 5;
         this.curPageIndex = 0;
 
         this.state = {
@@ -74,17 +74,28 @@ class Comment extends React.Component {
                     <div className={style.commentCount}>{this.state.comments.count}条评论</div>
                     <div className={style.sortType}>{this.state.sortType === 0 ? '按时间排序' : '按默认排序'}</div>
                 </div>
-                <div className={style.comments}>
-                    {this.buildComments(this.state.comments)}
-                </div>
-                <div className={style.page}>
-                    {this.buildPage()}
-                </div>
-                <div className={style.commentInputContainer + ' ' + (this.state.inputing ? style.inputing : '')}>
-                    <input className={style.commentInput} placeholder="写下你的评论..." onFocus={()=>{this.setState({inputing: true})}}
-                           onBlur={()=>{this.setState({inputing: false})}}/>
-                    <button className={style.submitBtn}>评论</button>
-                </div>
+                {this.state.comments.comment.length === 0 ?
+                    (<div className={style.loadingContainer}>
+                        <div className={style.loading} style={{animation:'moreBottom 0.4s linear 0s infinite alternate'}}></div>
+                        <div className={style.loading} style={{animation:'moreBottom 0.4s linear 0.1s infinite alternate'}}></div>
+                        <div className={style.loading} style={{animation:'moreBottom 0.4s linear 0.2s infinite alternate'}}></div>
+                        <div className={style.loading} style={{animation:'moreBottom 0.4s linear 0.3s infinite alternate'}}></div>
+                        <div className={style.loading} style={{animation:'moreBottom 0.4s linear 0.4s infinite alternate'}}></div>
+                    </div>) :
+                    (<div>
+                        <div className={style.comments}>
+                            {this.buildComments(this.state.comments)}
+                        </div>
+                        <div className={style.page}>
+                            {this.buildPage()}
+                        </div>
+                        <div className={style.commentInputContainer + ' ' + (this.state.inputing ? style.inputing : '')}>
+                            <input className={style.commentInput} placeholder="写下你的评论..." onFocus={()=>{this.setState({inputing: true})}}
+                                   onBlur={()=>{this.setState({inputing: false})}}/>
+                            <button className={style.submitBtn}>评论</button>
+                        </div>
+                    </div>)
+                }
             </div>
         );
     }
