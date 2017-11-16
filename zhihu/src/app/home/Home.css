@@ -89,3 +89,8 @@ body {
 .home-main .right-part .side-bar .item:hover {
     background-color: #f4f8fb;
 }
+
+.home-main .no-data {
+    margin-top: 20px;
+    text-align: center;
+}

@@ -67,7 +67,8 @@ class AnswerDao extends baseDao {
         try {
             var answers = await this.answerSeq.findAll({
                 where: {
-                    'answer_person_id': id
+                    'answer_person_id': id,
+                    'is_delete': null
                 }
             })
         } catch (err) {

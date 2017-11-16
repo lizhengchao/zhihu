@@ -17,15 +17,14 @@ class Home extends Component {
         this.state = {
             homeList: []
         }
-        //页面初始化时获取数据
-        this.getHomeList((homeList)=>{
-            this.setState({homeList: homeList});
-        });
     }
 
 
     componentDidMount () {
-        
+        //页面初始化时获取数据
+        this.getHomeList((homeList)=>{
+            this.setState({homeList: homeList});
+        });
     }
 
     render () {
@@ -36,6 +35,9 @@ class Home extends Component {
                 mainListDom.push((
                     <StoryCard key={data.id} data={data} />
                 ));
+            }
+            if(mainListDom.length === 0) {
+                mainListDom = (<div className="no-data">没有更多数据...</div>);
             }
             return mainListDom;
         };

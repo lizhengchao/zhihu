@@ -129,17 +129,6 @@ class PersonDao extends baseDao {
         }).catch(err => {
             callback(new ResultData(ErrorCode[10001], err.message, null));
         })
-
-        //真删除，改为假删除
-        // person.findById(id).then(person => {
-        //     person.destroy().then(() => {
-        //         sCallback && sCallback();
-        //     }).catch(err => {
-        //         fCallback && fCallback(err);
-        //     })
-        // }).catch(err => {
-        //     fCallback && fCallback(err);
-        // })
     }
 }
 

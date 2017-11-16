@@ -13,11 +13,12 @@ class Comment extends React.Component {
         super(props);
 
         this.buildPage = this.buildPage.bind(this);
+        this.pageClick = this.pageClick.bind(this);
+        this.getComments = this.getComments.bind(this);
         
         this.answerId = props.answerId;
-        this.getCommentsByAnswerId(this.answerId, (comments) => {
-            this.setState({comments: comments})
-        });
+        this.pageSize = 1;
+        this.curPageIndex = 0;
 
         this.state = {
             comments: {comment: []},
@@ -29,97 +30,11 @@ class Comment extends React.Component {
 
     }
 
-    getCommentsByAnswerId (answerId, callback) {
-        window.$.get({
-            url: serverUrl + '/comment/getCommentsDataByAnswerId',
-            data: {
-                id: answerId
-            },
-            success (res) {
-                res = JSON.parse(res);
-                if(res.errcode !== 0) {
-                    console.error('获取评论信息失败，错误信息：' + res.msg);
-                } else {
-                    callback(res.data);
-                }
-            },
-            error (xhr, textStatus, errorThrow) {
-                console.error('获取评论信息失败， 服务异常, 错误信息：' + xhr.responseText);
-            }
-        })
-        //TODO
-        var comments = {
-            count: 74,
-            comment: [
-                {
-                    id: 1,
-                    answerPerson: {
-                        id: 1,
-                        name: '圣堂后街',
-                        headShot: 'https://pic1.zhimg.com/af56f94d6c039369595a1a111b689b08_is.jpg'
-
-                    },
-                    content: '你是怎么知道月入5万的人只赚不花？<br/><br/><br/>123',
-                    createTime: '1509513858',
-                    approveCount: 30,
-                    hasReply: true,
-                    replyPerson: {
-                        id: 2,
-                        name: '逗比',
-                        headShot: 'https://pic3.zhimg.com/bb9387206adeb837055b0c8506ddcbfe_is.jpg'
-                    }
-                },
-                {
-                    id: 2,
-                    answerPerson: {
-                        id: 2,
-                        name: '逗比',
-                        headShot: 'https://pic1.zhimg.com/af56f94d6c039369595a1a111b689b08_is.jpg'
-
-                    },
-                    content: '五万还不够花',
-                    createTime: '1506816000',
-                    approveCount: 0,
-                    hasReply: false
-                },
-                {
-                    id: 3,
-                    answerPerson: {
-                        id: 2,
-                        name: '逗比',
-                        headShot: 'https://pic1.zhimg.com/af56f94d6c039369595a1a111b689b08_is.jpg'
-
-                    },
-                    content: '五万还不够花',
-                    createTime: '1506816000',
-                    approveCount: 0,
-                    hasReply: false
-                },
-                {
-                    id: 4,
-                    answerPerson: {
-                        id: 2,
-                        name: '逗比',
-                        headShot: 'https://pic1.zhimg.com/af56f94d6c039369595a1a111b689b08_is.jpg'
-
-                    },
-                    content: '五万还不够花',
-                    createTime: '1506816000',
-                    approveCount: 0,
-                    hasReply: false
-                }
-            ],
-            excellentCommentsId: [
-                1
-            ],
-            pageSize: 20,
-            pageNumber:0,
-            totalCount: 5
-        }
-        return comments;
-    }
-
     componentDidMount () {
+        this.getComments((comments) => {
+            this.setState({comments: comments})
+        });
+
         this.scrollEvent = (e) => {
             let commentDom = this.refs['comment'],
                 commentOffsetTop = commentDom.offsetTop,
@@ -187,12 +102,64 @@ class Comment extends React.Component {
     }
     
     buildPage () {
-        var pages = [];
-        for(let i=0; i<this.state.comments.totalCount; i++) {
-            pages.push(<div key={i} className={style.pageItem+ ' ' + (this.state.comments.pageNumber === i ? style.currPage: '')}>{i}</div>)
+        var pages = [],
+            totalCount = this.state.comments.totalCount,
+            curPageIndex = this.curPageIndex,
+            pushList = (start, count) => {
+                for(let i=start; i<count; i++) {
+                    pages.push(<div key={i} className={style.pageItem+ ' ' + (this.curPageIndex === i ? style.currPage: '')} onClick={this.pageClick.bind(this, i)}>{i + 1}</div>)
+                }
+            }
+        if(totalCount > 6) {
+            if(curPageIndex < 3) {
+                pushList(0, 4);
+                pages.push(<div key={'more'} className={style.pageItem}>...</div>);
+                pages.push(<div key={totalCount} className={style.pageItem} onClick={this.pageClick.bind(this, totalCount)}>{totalCount}</div>);
+            } else if (curPageIndex > totalCount-4) {
+                pages.push(<div key={0} className={style.pageItem} onClick={this.pageClick.bind(this, 0)}>{1}</div>);
+                pages.push(<div key={'more'} className={style.pageItem}>...</div>);
+                pushList(totalCount-4, totalCount);
+            } else {
+                pages.push(<div key={0} className={style.pageItem} onClick={this.pageClick.bind(this, 0)}>{1}</div>);
+                pages.push(<div key={'more'} className={style.pageItem}>...</div>);
+                pushList(curPageIndex-1, curPageIndex+2);
+                pages.push(<div key={'more1'} className={style.pageItem}>...</div>);
+                pages.push(<div key={totalCount} className={style.pageItem} onClick={this.pageClick.bind(this, totalCount)}>{totalCount}</div>);
+            }
+        } else {
+            pushList(0, totalCount);
         }
-        pages.push(<div key={this.state.comments.totalCount} className={style.pageItem}>下一页</div>);
+        pages.push(<div key={'next'} className={style.pageItem} onClick={this.pageClick.bind(this, curPageIndex+1)}>下一页</div>);
         return pages;
+    }
+
+    pageClick (pageIndex) {
+        this.curPageIndex = pageIndex;
+        this.getComments((comments)=>{
+            this.setState({comments: comments});
+        })
+    }
+
+    getComments (callback) {
+        window.$.get({
+            url: serverUrl + '/comment/getCommentsDataByAnswerId',
+            data: {
+                id: this.answerId,
+                pageSize: this.pageSize,
+                pageIndex: this.curPageIndex
+            },
+            success (res) {
+                res = JSON.parse(res);
+                if(res.errcode !== 0) {
+                    console.error('获取评论信息失败，错误信息：' + res.msg);
+                } else {
+                    callback(res.data);
+                }
+            },
+            error (xhr, textStatus, errorThrow) {
+                console.error('获取评论信息失败， 服务异常, 错误信息：' + xhr.responseText);
+            }
+        });
     }
 }
 

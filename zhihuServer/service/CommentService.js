@@ -22,7 +22,7 @@ class CommentService {
         return this.commentDao.getCommentsByTypeAndId(type, id, {pageSize, pageIndex});
     }
     
-    async getCommentsDataByAnswerId (id, {pageSize, pageIndex}) {
+    async getCommentsDataByAnswerId (id, {pageSize = 20, pageIndex = 0}) {
         var [comments, commentCount] = await Promise.all([this.getCommentsByTypeAndId(1, id, {pageSize, pageIndex}),
             this.getCommentCountByAnswerId(id)]),
             commentsResult = [],
@@ -66,9 +66,9 @@ class CommentService {
         result.comment = commentsResult;
         //加入页信息
         result.count = commentCount;
-        result.pageSize = pageSize;
-        result.pageIndex = pageIndex;
-        result.totalCount = Math.ceil(parseInt(commentCount/pageSize));
+        result.pageSize = parseInt(pageSize);
+        result.pageIndex = parseInt(pageIndex);
+        result.totalCount = Math.ceil(commentCount/pageSize);
         return result
     }
 

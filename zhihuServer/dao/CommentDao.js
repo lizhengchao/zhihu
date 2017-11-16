@@ -63,11 +63,13 @@ class CommentDao extends baseDao {
     }
 
     async getCommentCountByTypeAndId (type, id) {
+        const Op = Sequelize.Op;
         try {
             var count = await this.commentSeq.count({
                 where: {
                     type: type,
-                    'question_answer_id': id
+                    'question_answer_id': id,
+                    'is_delete': null
                 }
             });
         } catch (err) {
