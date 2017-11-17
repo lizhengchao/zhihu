@@ -18,14 +18,24 @@ class CommentService {
         return this.commentDao.getCommentById(id);
     }
     
-    getCommentsByTypeAndId (type, id, {pageSize = 20, pageIndex = 0}) {
-        return this.commentDao.getCommentsByTypeAndId(type, id, {pageSize, pageIndex});
+    getCommentsByTypeAndId (type, id, {pageSize = 20, pageIndex = 0, order="create_time"}) {
+        return this.commentDao.getCommentsByTypeAndId(type, id, {pageSize, pageIndex, order});
+    }
+
+    getCommentsByQuestionIdOrderbyVote (id, {pageSize = 20, pageIndex = 0}) {
+        return this.commentDao.getCommentsByQuestionIdOrderbyVote(id, {pageSize, pageIndex});
     }
     
-    async getCommentsDataByAnswerId (id, {pageSize = 20, pageIndex = 0}) {
-        var [comments, commentCount] = await Promise.all([this.getCommentsByTypeAndId(1, id, {pageSize, pageIndex}),
-            this.getCommentCountByAnswerId(id)]),
-            commentsResult = [],
+    async getCommentsDataByAnswerId (id, {pageSize = 20, pageIndex = 0, order = ''}) {
+        if(order !== 'time') {
+            //默认按点赞数返回
+            var [comments, commentCount] = await Promise.all([this.getCommentsByQuestionIdOrderbyVote(id, {pageSize, pageIndex}),
+                this.getCommentCountByAnswerId(id)]);
+        } else {
+            var [comments, commentCount] = await Promise.all([this.getCommentsByTypeAndId(1, id, {pageSize, pageIndex}),
+                this.getCommentCountByAnswerId(id)]);
+        }
+        var commentsResult = [],
             result = {};
         for(let comment of comments) {
             try {

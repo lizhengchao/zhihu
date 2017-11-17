@@ -32,7 +32,7 @@ class CommentItem extends React.Component {
                 <div className={style.commentAction}>
                     <div className={style.actionItem}>
                         <img src={require('resource/img/vote.jpg')}/>
-                        <span>赞</span>
+                        <span>{this.props.data.approveCount === 0 ? '赞' : this.props.data.approveCount}</span>
                     </div>
                     <div className={style.actionItem + ' ' + (this.props.data.hasReply ? '' : 'disable')}>
                         <img src={require('resource/img/session.jpg')}/>

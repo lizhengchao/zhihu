@@ -14,6 +14,7 @@ class Comment extends React.Component {
 
         this.buildPage = this.buildPage.bind(this);
         this.pageClick = this.pageClick.bind(this);
+        this.sortClick = this.sortClick.bind(this);
         this.getComments = this.getComments.bind(this);
         
         this.answerId = props.answerId;
@@ -72,7 +73,7 @@ class Comment extends React.Component {
                 {this.state.showCloseBtn ? (<div className={style.closeBtn} style={{left: this.state.closeBtnLeft + 'px'}} onClick={this.props.closeBtnTap}>收起评论</div>) : ''}
                 <div className={style.top}>
                     <div className={style.commentCount}>{this.state.comments.count}条评论</div>
-                    <div className={style.sortType}>{this.state.sortType === 0 ? '按时间排序' : '按默认排序'}</div>
+                    <div className={style.sortType} onClick={this.sortClick}>{this.state.sortType === 0 ? '按默认排序' : '按时间排序'}</div>
                 </div>
                 {this.state.comments.comment.length === 0 ?
                     (<div className={style.loadingContainer}>
@@ -151,13 +152,24 @@ class Comment extends React.Component {
         })
     }
 
+    sortClick () {
+        this.state.sortType = this.state.sortType === 0 ? 1:0;
+        this.getComments((comments) => {
+            this.setState({
+                comments: comments,
+                sortType: this.state.sortType
+            })
+        })
+    }
+
     getComments (callback) {
         window.$.get({
             url: serverUrl + '/comment/getCommentsDataByAnswerId',
             data: {
                 id: this.answerId,
                 pageSize: this.pageSize,
-                pageIndex: this.curPageIndex
+                pageIndex: this.curPageIndex,
+                order: this.state.sortType === 0 ? '' : 'time'
             },
             success (res) {
                 res = JSON.parse(res);

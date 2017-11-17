@@ -46,13 +46,16 @@ class CommentDao extends baseDao {
         return comment;
     }
 
-    async getCommentsByTypeAndId (type, id, {pageSize, pageIndex}) {
+    async getCommentsByTypeAndId (type, id, {pageSize, pageIndex, order}) {
         try {
             var comments = await this.commentSeq.findAll({
                 where: {
                     type: type,
                     'question_answer_id': id
                 },
+                order: [
+                    [order, 'DESC']
+                ],
                 offset: pageSize * pageIndex,
                 limit: parseInt(pageSize)
             });
@@ -62,6 +65,21 @@ class CommentDao extends baseDao {
         return comments;
     }
 
+    async getCommentsByQuestionIdOrderbyVote (id, {pageSize, pageIndex}) {
+        try {
+            var comments = await this.sequelize.query('select c.* from comment c LEFT JOIN voterelation v on c.id = v.answer_comment_id where (v.type = 1 || v.type is null)' +
+                ' and c.question_answer_id = :id and c.type = 1 GROUP BY c.id ORDER BY count(*) desc, v.id desc limit :offset, :limit',
+                {model: this.commentSeq,
+                    replacements: {
+                        id: id,
+                        offset: pageSize * pageIndex,
+                        limit: parseInt(pageSize)
+                    }});
+        } catch (err) {
+            throw new ErrorData(ErrorCode[10001], err.message);
+        }
+        return comments;
+    }
     async getCommentCountByTypeAndId (type, id) {
         const Op = Sequelize.Op;
         try {

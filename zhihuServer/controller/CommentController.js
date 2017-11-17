@@ -27,9 +27,9 @@ router.get('/getCommentInfo', async (req, res)=> {
 });
 
 router.get('/getCommentsDataByAnswerId', async(req, res) => {
-    let {id, pageIndex, pageSize} = req.query;
+    let {id, pageIndex, pageSize, order} = req.query;
     try {
-        var resultData = await commentService.getCommentsDataByAnswerId(id, {pageIndex, pageSize});
+        var resultData = await commentService.getCommentsDataByAnswerId(id, {pageIndex, pageSize, order});
     } catch (errResultData) {
         res.send(new ResponseData(errResultData).buildStr())
     }
