@@ -1,0 +1,43 @@
+:local .background {
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.5);
+    padding-top: 50px;
+}
+
+:local .modal {
+    border-radius: 2px;
+    background-color: white;
+    margin: auto;
+    position: relative;
+}
+
+:local .close {
+    position: absolute;
+    top: 0;
+    color: white;
+    width: 50px;
+    cursor: pointer;
+}
+
+.fade-enter {
+    margin-top: 50px;
+    opacity: 0;
+}
+
+.fade-enter.fade-enter-active {
+    margin-top: 0px;
+    opacity: 1;
+    transition: all .3s ease-in;
+}
+
+.fade-leave {
+    margin-top: 0px;
+    opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+    margin-top: 50px;
+    opacity: 0;
+    transition: all .3s ease-in;
+}
