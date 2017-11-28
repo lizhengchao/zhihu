@@ -1,0 +1,111 @@
+:local .main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+:local .title {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    color: black
+}
+
+:local .titleDes {
+    font-size: 13px;
+    text-align: center;
+    color: #8590a6;
+    margin-top: 4px;
+}
+
+:local .questionTitle {
+    margin-top: 15px;
+    border: 1px solid #e7eaf1;
+    border-radius: 2px;
+    flex: 1;
+    display: flex;
+    position: relative;
+}
+
+:local .questionTitle textarea {
+    flex: 1;
+    padding: 10px;
+    height: 50px;
+    resize: none;
+    border: 0;
+}
+
+:local .titleLabel {
+    text-align: right;
+    color: red;
+    margin-top: 15px;
+}
+
+:local .questionList {
+    position: absolute;
+    top: 75px;
+    background-color: white;
+    z-index: 3;
+}
+
+:local .questionTopic {
+    margin-top: 15px;
+    border: 1px solid #e7eaf1;
+    border-radius: 2px;
+    flex: 1;
+    display: flex;
+    position: relative;
+}
+
+:local .questionTopic input {
+    flex: 1;
+    padding: 10px;
+    height: 20px;
+    border: 0;
+}
+
+:local .topicList {
+    position: absolute;
+    top: 45px;
+    background-color: white;
+    z-index: 2;
+}
+
+:local .questionDesContent {
+    margin-top: 20px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+:local .questionDes {
+    margin-top: 15px;
+    height: 100px;
+    padding: 10px;;
+    border: 1px solid #e7eaf1;
+    border-radius: 2px;
+    flex: 1;
+    resize: none;
+}
+
+:local .anonymous {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.opacity-enter {
+    opacity: 0;
+}
+
+.opacity-enter.opacity-enter-active {
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.opacity-leave {
+    opacity: 1;
+}
+
+.opacity-leave.opacity-leave-active {
+    opacity: 0;
+    transition: opacity .3s;
+}

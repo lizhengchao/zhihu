@@ -1,0 +1,12 @@
+:local .topicList {
+    overflow-y: scroll;
+    height: 200px;
+}
+
+:local .item {
+    padding: 10px;
+}
+
+:local .item:hover {
+    background-color: #eef4fa;
+}

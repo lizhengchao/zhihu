@@ -12,6 +12,7 @@ class Modal extends Component {
         super(props);
 
         this.onCloseClick = this.onCloseClick.bind(this);
+        this.onBackgroundClick = this.onBackgroundClick.bind(this);
 
         this.state = {
             showModalMain: false
@@ -35,7 +36,7 @@ class Modal extends Component {
         var {width, height, children} = this.props;
         return (
             <Dialog>
-                <div className={style.background}>
+                <div className={style.background} onClick={this.onBackgroundClick} ref="background">
                     <TransitionGroup transitionName="fade" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
                         {
                             this.state.showModalMain ?
@@ -57,6 +58,12 @@ class Modal extends Component {
         setTimeout(() => {
             this.props.onCloseClick();
         }, 500)
+    }
+
+    onBackgroundClick (e) {
+        if(e.target === this.refs['background'] || e.target === this.refs['background'].children[0]) {
+            this.onCloseClick();
+        }
     }
 }
 

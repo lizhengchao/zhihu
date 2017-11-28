@@ -30,7 +30,21 @@ var getUserId = ()=> {
     return getCookie('userId');
 };
 
+/*判断某个元素是否是另一个元素的父元素*/
+var isParentNodeOf = (parentNode, childNode) => {
+    if(!parentNode.nodeName || !childNode.nodeName) {
+        return false;
+    } else {
+        var nodes = window.$(childNode).parents();
+        for(let node of nodes) {
+            if(node === parentNode) {return true}
+        }
+        return false;
+    }
+}
+
 export {
     setUserId, 
-    getUserId
+    getUserId,
+    isParentNodeOf
 }

@@ -1,0 +1,40 @@
+:local .questionList {
+    overflow-y: scroll;
+    height: 300px;
+    border: 1px #eee solid;
+    border-radius: 3px;
+    margin-top: 15px;
+    z-index: 3
+}
+
+:local .listHeader {
+    padding: 10px;
+    border-bottom: 1px #eee solid;
+    color: #8590a6;
+    display: flex;
+}
+
+:local .listClose {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+:local .item {
+    padding: 10px;
+    color: black;
+    display: flex;
+}
+
+:local .item:hover {
+    background-color: #eef4fa;
+}
+
+:local .itemContent {
+    flex: 1
+}
+
+:local .itemSpan {
+    color: #8590a6;
+    width: 100px;
+    text-align: right;
+}

@@ -2,20 +2,25 @@
  * Created by lzc on 2017/10/27.
  */
 import React, {Component} from 'react';
+import ReactDom from 'react-dom';
 import Navigation from 'component/Navigation';
 import StoryCard from 'app/answer/StoryCard';
 import NavigationPartingLine from 'component/NavigationPartingLine';
+import QuestionAsk from '../question/questionmain/QuestionAsk';
 import './Home.css';
-import cs from 'classnames';
 import {serverUrl} from 'extra/config';
 import {getUserId} from 'extra/utils';
+import TransitionGroup from 'react-addons-css-transition-group';
 
 class Home extends Component {
     constructor (props) {
         super(props);
 
+        this.questionAsk = this.questionAsk.bind(this);
+
         this.state = {
-            homeList: []
+            homeList: [],
+            showQuestionAsk: false
         }
     }
 
@@ -50,7 +55,10 @@ class Home extends Component {
                     <div className="left-part">
                         <div className="card top-part">
                             <div className="top-item-container">
-                                <a className="top-item" href=""><img src={require('resource/img/question-logo.jpg')} alt=""/>提问</a>
+                                <a className="top-item" href="" onClick={this.questionAsk}>
+                                    <img src={require('resource/img/question-logo.jpg')} alt=""/>提问
+                                    {this.state.showQuestionAsk ? <QuestionAsk onCloseClick={()=>{this.setState({showQuestionAsk: false})}}/> : null}
+                                </a>
                                 <a className="top-item"><img src={require('resource/img/answer-logo.jpg')} alt=""/>回答</a>
                                 <a className="top-item"><img src={require('resource/img/article-logo.jpg')} alt=""/>写文章</a>
                                 <a className="top-item"><img src={require('resource/img/idea-logo.jpg')} alt=""/>写想法</a>
@@ -102,6 +110,13 @@ class Home extends Component {
             error (xmlHttpRequest, textStatus, errorThrown) {
                 console.error('获取主页信息失败，服务异常, 错误信息：' + xmlHttpRequest.responseText);    
             }
+        })
+    }
+
+    questionAsk (e) {
+        e.preventDefault();
+        this.setState({
+            showQuestionAsk: true
         })
     }
 }
