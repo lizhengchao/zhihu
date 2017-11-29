@@ -104,18 +104,24 @@ class QuestionTopicList extends Component {
         var list = [];
         for (var topic of topicList) {
             list.push(
-                <div className={style.item} key={topic.id}>
+                <div className={style.item} key={topic.id} onClick={this.itemClick.bind(this, topic)}>
                     {topic.content}
                 </div>
             )
         }
         return list;
     }
+
+    itemClick (topic) {
+        this.setState({topicList: []});
+        this.props.itemClick(topic.id, topic.content);
+    }
 }
 
 QuestionTopicList.propTypes = {
     text: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
+    itemClick: PropTypes.func
 }
 
 export default QuestionTopicList;

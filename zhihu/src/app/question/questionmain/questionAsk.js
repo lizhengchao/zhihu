@@ -7,14 +7,19 @@ import style from './style/QuestionAsk.css';
 import Modal from 'component/modal/Modal';
 import QuestionAskList from './QuestionAskList';
 import QuestionTopicList from './QuestionTopicList';
+import TopicContainer from './TopicContainer';
 
 class QuestionAsk extends Component {
     constructor (props) {
         super(props);
 
+        this.questionTopicClick = this.questionTopicClick.bind(this);
+        this.topicContainerCloseClick = this.topicContainerCloseClick.bind(this);
+
         this.state = {
             questionTitle: '',
-            questionTopic: ''
+            questionTopic: '',
+            topicList: []
         }
 
         this.questionDes = '';
@@ -33,8 +38,9 @@ class QuestionAsk extends Component {
                     </div>
                     {!this.state.questionTitle.endsWith('?') && this.state.questionTitle !== '' ? <div className={style.titleLabel}>你还没有加上？</div> : null}
                     <div className={style.questionTopic}>
+                        <TopicContainer items={this.state.topicList} onCloseClick={this.topicContainerCloseClick}/>
                         <input placeholder="添加话题" onInput={(e)=>{this.setState({questionTopic: e.target.value})}}/>
-                        <QuestionTopicList className={style.topicList} text={this.state.questionTopic}/>
+                        <QuestionTopicList className={style.topicList} text={this.state.questionTopic} itemClick={this.questionTopicClick}/>
                     </div>
                     <div className={style.questionDesContent}>问题描述（可选）：</div>
                     <textarea className={style.questionDes} placeholder="问题背景、条件等详细信息"/>
@@ -44,6 +50,22 @@ class QuestionAsk extends Component {
                 </div>
             </Modal>
         )
+    }
+
+    questionTopicClick (id, content) {
+        var newTopicList = this.state.topicList.slice(0, this.state.topicList.length);
+        newTopicList.push({id, content});
+        this.setState({topicList: newTopicList});
+    }
+
+    topicContainerCloseClick (id) {
+        var newTopicList = this.state.topicList.slice(0, this.state.topicList.length);
+        newTopicList.forEach((topic, number) => {
+            if(topic.id === id) {
+                newTopicList.splice(number, 1);
+                this.setState({topicList: newTopicList});
+            }
+        })
     }
 }
 

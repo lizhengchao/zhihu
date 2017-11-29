@@ -1,0 +1,18 @@
+:local .topicContainer {
+    display: flex;
+    align-items: center;
+}
+
+:local .topicItem {
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    border-radius: 100px;
+    background-color: #eef4fa;
+    color: #3e7ac2;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
