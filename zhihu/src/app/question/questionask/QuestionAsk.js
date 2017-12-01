@@ -47,6 +47,7 @@ class QuestionAsk extends Component {
                     <div>
                         <input className={style.anonymous} type="checkbox"/><span>匿名提问</span>
                     </div>
+                    <div><button className={style.subBtn}>提交问题</button></div>
                 </div>
             </Modal>
         )

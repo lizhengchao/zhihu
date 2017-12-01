@@ -6,7 +6,7 @@ import ReactDom from 'react-dom';
 import Navigation from 'component/Navigation';
 import StoryCard from 'app/answer/StoryCard';
 import NavigationPartingLine from 'component/NavigationPartingLine';
-import QuestionAsk from '../question/questionmain/QuestionAsk';
+import QuestionAsk from '../question/questionask/QuestionAsk';
 import './Home.css';
 import {serverUrl} from 'extra/config';
 import {getUserId} from 'extra/utils';

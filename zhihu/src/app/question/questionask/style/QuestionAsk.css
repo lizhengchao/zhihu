@@ -92,6 +92,19 @@
     margin-right: 5px;
 }
 
+:local .subBtn {
+    width: 200px;
+    height: 35px;
+    display: block;
+    margin: 50px auto 0 auto;
+    background-color: dodgerblue;
+    color: white;
+    line-height: 35px;
+    text-align: center;
+    border: 0px;
+    border-radius: 5px;
+}
+
 .opacity-enter {
     opacity: 0;
 }
