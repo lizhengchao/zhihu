@@ -4,6 +4,7 @@
 import React from 'react';
 import Home from 'app/home/Home';
 import Sign from 'app/user/sign/Sign';
+import QuestionMain from 'app/question/questionmain/QuestionMain';
 import {Redirect} from 'react-router';
 import {BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
@@ -40,6 +41,7 @@ const router = () => (
             <Switch>
                 <Route path="/home" component={Home}/>
                 <Route path="/sign" component={Sign}/>
+                <Route path="/questionMain" component={QuestionMain}/>
                 <Route render={()=>{return <Redirect to="/home"/>}}/>
             </Switch>
 

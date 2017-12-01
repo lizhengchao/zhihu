@@ -1,0 +1,29 @@
+:local .main {
+    display: flex;
+    width: 100%;
+}
+
+:local .leftPart {
+    flex: 2
+}
+
+:local .rightPart {
+    flex: 1
+}
+
+:local .topicContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+:local .topic {
+    margin: 5px;
+    background-color: #5ca5e8;
+    border-radius: 10px;
+    color: darkblue;
+    padding: 3px;
+}
+
+:locla .topic a {
+    color: darkblue!important;
+}

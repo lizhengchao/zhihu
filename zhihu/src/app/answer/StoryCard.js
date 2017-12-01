@@ -7,6 +7,7 @@ import './StoryCard.css';
 import Action from './Action';
 import Comment from './Comment';
 import cs from 'classnames';
+import {Link} from 'react-router-dom';
 
 class StoryCard extends React.Component {
     constructor (props) {
@@ -64,7 +65,7 @@ class StoryCard extends React.Component {
             <div className="card story-card">
                 <div ref="storyCard">
                     <div className="gray topic">{this.state.from}<img className="fork" src={require('resource/img/fork.jpg')} alt=""/></div>
-                    <div className="title">{this.state.title}</div>
+                    <div className="title"><Link to="/questionMain">{this.state.title}</Link></div>
                     <div className="user">
                         <img src={this.state.headshot} alt=""/>
                         <span className="user-name">{this.state.name}</span>
