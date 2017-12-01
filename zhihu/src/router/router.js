@@ -5,7 +5,7 @@ import React from 'react';
 import Home from 'app/home/Home';
 import Sign from 'app/user/sign/Sign';
 import {Redirect} from 'react-router';
-import {BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 const globalFilter = (match) => {
     function getCookie(c_name) {
@@ -25,9 +25,9 @@ const globalFilter = (match) => {
     }
 
     if(typeof getCookie('userId') != 'undefined' && getCookie('userId') != '') {
-        return (<div></div>)
+        return null;
     } else if(match.location.pathname.startsWith('/sign')){
-        return (<div></div>)
+        return null;
     } else {
         return (<Redirect to="/sign"/>);
     }
@@ -37,8 +37,12 @@ const router = () => (
     <Router>
         <div>
             <Route path="/" render={globalFilter}/>
-            <Route path="/home" component={Home}/>
-            <Route path="/sign" component={Sign}/>
+            <Switch>
+                <Route path="/home" component={Home}/>
+                <Route path="/sign" component={Sign}/>
+                <Route render={()=>{return <Redirect to="/home"/>}}/>
+            </Switch>
+
         </div>
     </Router>
 );
