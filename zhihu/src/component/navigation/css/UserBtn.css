@@ -1,0 +1,28 @@
+:local .item {
+    padding: 10px;
+    background-color: #fff;
+}
+
+:local .item:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.appear-enter {
+    opacity: 0;
+}
+
+.appear-enter.appear-enter-active {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+.appear-leave {
+    opacity: 1;
+}
+
+.appear-leave.appear-leave-active {
+    opacity: 0;
+    margin-top: -20px;
+    transition: all 0.5s;
+}

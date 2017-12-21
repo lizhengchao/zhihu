@@ -5,13 +5,16 @@ import React, {Component} from 'react';
 import './Navigation.css';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
+import UserBtn from './navigation/UserBtn';
 
 class Navigation extends Component {
     constructor (props) {
         super(props);
 
         this.state = {
-            searching: false
+            searching: false,
+
+
         }
     }
 
@@ -32,7 +35,7 @@ class Navigation extends Component {
                     <div style={{width: '100px'}}></div>
                     <div className="nav-icon" style={{'backgroundImage': 'url('+ require('resource/img/bell.jpg') + ')'}}></div>
                     <div className="nav-icon" style={{'backgroundImage': 'url('+ require('resource/img/message.jpg') + ')'}}></div>
-                    <div className="nav-icon" style={{'backgroundImage': 'url('+ require('resource/img/userHeader.jpg') + ')'}}></div>
+                    <UserBtn/>
                 </div>
             </div>
         )

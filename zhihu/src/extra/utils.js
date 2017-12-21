@@ -1,13 +1,15 @@
 /**
  * Created by lzc on 2017/11/15.
  */
+var setCookie = function(c_name,value,expiredays) {
+    var exdate=new Date()
+    exdate.setDate(exdate.getDate()+expiredays)
+    document.cookie=c_name+ "=" + encodeURI(value) +
+        ((expiredays==null) ? "" : ";expires="+exdate.toGMTString()) + "; path=/"
+};
+
 var setUserId = (userId)=> {
-    var setCookie = function(c_name,value,expiredays) {
-        var exdate=new Date()
-        exdate.setDate(exdate.getDate()+expiredays)
-        document.cookie=c_name+ "=" + encodeURI(value) +
-            ((expiredays==null) ? "" : ";expires="+exdate.toGMTString()) + "; path=/"
-    };
+
     setCookie('userId', userId);
 };
 
@@ -30,6 +32,10 @@ var getUserId = ()=> {
     return getCookie('userId');
 };
 
+var deleteUserId = () => {
+    setCookie('userId', '', -1);
+}
+
 /*判断某个元素是否是另一个元素的父元素*/
 var isParentNodeOf = (parentNode, childNode) => {
     if(!parentNode.nodeName || !childNode.nodeName) {
@@ -46,5 +52,6 @@ var isParentNodeOf = (parentNode, childNode) => {
 export {
     setUserId, 
     getUserId,
+    deleteUserId,
     isParentNodeOf
 }
